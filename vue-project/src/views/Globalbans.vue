@@ -4,7 +4,7 @@
   
   <style>
     .GBinfo{
-      width: 1000px;
+      width: 1660px;
       height: 200px;
       border: 3px purple solid;
     }
