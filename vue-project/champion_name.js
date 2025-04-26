@@ -1,4 +1,3 @@
-// fetch-champion-names.js
 import fs from 'fs';
 import https from 'https';
 

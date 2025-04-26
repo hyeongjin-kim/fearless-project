@@ -2,45 +2,47 @@
 import { RouterLink, RouterView } from 'vue-router'
 import HomeView from './views/BluePlayers.vue';
 import AboutView from './views/RedPlayers.vue';
-import Globalbans from './views/Globalbans.vue';
+import GlobalBluebans from './views/GlobalBluebans.vue';
+import GlobalRedbans from './views/GlobalRedbans.vue';
 import Bans from './views/Bans.vue';
 import List from './views/List.vue';
 import BluePlayers from './views/BluePlayers.vue';
 import RedPlayers from './views/RedPlayers.vue';
 
-
-
 </script>
 
 <template>
-    <div class="bans-container">
-      <Globalbans></Globalbans>
-      
+  <div class="content">
+    <div class="total">
+      <main>
+        <GlobalBluebans></GlobalBluebans>
+        <List></List>
+        <GlobalRedbans></GlobalRedbans>
+      </main>
+      <Bans> </Bans>
+      <div class="pick">
+        <RedPlayers></RedPlayers>
+        <BluePlayers></BluePlayers>
+      </div>
     </div>
-    
-    <main>
-      <List></List>
-    </main>
-    <Bans> </Bans>
-    <div class="pick">
-      <RedPlayers></RedPlayers>
-      <BluePlayers></BluePlayers>
-    </div>
-
-    
+  </div>
 </template>
 
 <style scoped>
   main{
-    width: 1660px;
+    width: 2000px;
     height: 800px;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
   }
   .pick{
-    width: 1660px;
-    height: 500px;
+    width: 2000px;
+    height: 280px;
     display: flex;
     justify-content: space-between;
+  }
+  .content{
+    display: flex;
+    justify-content: center;
   }
 </style>
