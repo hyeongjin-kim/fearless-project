@@ -29,7 +29,7 @@
     .Binfo{
       width: 2000px;
       height: 128px;
-      border: 3px black solid;
+      /* border: 3px black solid; */
       display: flex;
       justify-content: space-between;
     }

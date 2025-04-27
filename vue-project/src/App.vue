@@ -21,8 +21,8 @@ import RedPlayers from './views/RedPlayers.vue';
       </main>
       <Bans> </Bans>
       <div class="pick">
-        <RedPlayers></RedPlayers>
         <BluePlayers></BluePlayers>
+        <RedPlayers></RedPlayers>
       </div>
     </div>
   </div>
@@ -31,7 +31,7 @@ import RedPlayers from './views/RedPlayers.vue';
 <style scoped>
   main{
     width: 2000px;
-    height: 800px;
+    height: 900px;
     display: flex;
     justify-content: space-between;
   }

@@ -1,40 +1,15 @@
+<script setup>
+import {useVersionStore} from '@/stores/version.js'
+import { useGlobalBluebanStore } from '@/stores/globalblueban';
+const version = useVersionStore();
+const globalblueban = useGlobalBluebanStore();
+</script>
+
 <template>
-  <div class= "ex">
-    <div class="GBBinfo">
-      <div>game1 </div>
-      <img src = "https://ddragon.leagueoflegends.com/cdn/15.8.1/img/champion/Aatrox.png" width = "90px" height = "90px">
-      <img src = "https://ddragon.leagueoflegends.com/cdn/15.8.1/img/champion/Ahri.png" width = "90px" height = "90px">
-      <img src = "https://ddragon.leagueoflegends.com/cdn/15.8.1/img/champion/Fizz.png" width = "90px" height = "90px">
-      <img src = "https://ddragon.leagueoflegends.com/cdn/15.8.1/img/champion/Jax.png" width = "90px" height = "90px">
-      <img src = "https://ddragon.leagueoflegends.com/cdn/15.8.1/img/champion/Xayah.png" width = "90px" height = "90px">
-      
-    </div>
-    <div class="GBBinfo">
-      <div>game2 </div>
-      <img src = "https://ddragon.leagueoflegends.com/cdn/15.8.1/img/champion/Aatrox.png" width = "90px" height = "90px">
-      <img src = "https://ddragon.leagueoflegends.com/cdn/15.8.1/img/champion/Ahri.png" width = "90px" height = "90px">
-      <img src = "https://ddragon.leagueoflegends.com/cdn/15.8.1/img/champion/Fizz.png" width = "90px" height = "90px">
-      <img src = "https://ddragon.leagueoflegends.com/cdn/15.8.1/img/champion/Jax.png" width = "90px" height = "90px">
-      <img src = "https://ddragon.leagueoflegends.com/cdn/15.8.1/img/champion/Xayah.png" width = "90px" height = "90px">
-      
-    </div>
-    <div class="GBBinfo">
-      <div>game3 </div>
-      <img src = "https://ddragon.leagueoflegends.com/cdn/15.8.1/img/champion/Aatrox.png" width = "90px" height = "90px">
-      <img src = "https://ddragon.leagueoflegends.com/cdn/15.8.1/img/champion/Ahri.png" width = "90px" height = "90px">
-      <img src = "https://ddragon.leagueoflegends.com/cdn/15.8.1/img/champion/Fizz.png" width = "90px" height = "90px">
-      <img src = "https://ddragon.leagueoflegends.com/cdn/15.8.1/img/champion/Jax.png" width = "90px" height = "90px">
-      <img src = "https://ddragon.leagueoflegends.com/cdn/15.8.1/img/champion/Xayah.png" width = "90px" height = "90px">
-      
-    </div>
-    <div class="GBBinfo">
-      <div>game4 </div>
-      <img src = "https://ddragon.leagueoflegends.com/cdn/15.8.1/img/champion/Aatrox.png" width = "90px" height = "90px">
-      <img src = "https://ddragon.leagueoflegends.com/cdn/15.8.1/img/champion/Ahri.png" width = "90px" height = "90px">
-      <img src = "https://ddragon.leagueoflegends.com/cdn/15.8.1/img/champion/Fizz.png" width = "90px" height = "90px">
-      <img src = "https://ddragon.leagueoflegends.com/cdn/15.8.1/img/champion/Jax.png" width = "90px" height = "90px">
-      <img src = "https://ddragon.leagueoflegends.com/cdn/15.8.1/img/champion/Xayah.png" width = "90px" height = "90px">
-      
+  <div class= "BlueGlobalBan-container">
+    <div v-for="(game, index) in globalblueban.GlobalBlueban" :key="inedx" class="BlueGlobalBan">
+      <div>game{{index + 1}} </div>
+      <img v-for="(ban, i) in game":key="i" :src = "`https://ddragon.leagueoflegends.com/cdn/${version.version}/img/champion/${ban}.png`" width = "90px" height = "90px">
     </div>
   </div>
     
@@ -42,13 +17,15 @@
   </template>
   
   <style>
-    .GBBinfo{
+    .BlueGlobalBan{
       width: 450px;
       height: 120px;
       /* border: 3px purple solid; */
     }
-    .ex{
+    .BlueGlobalBan-container{
+      width: 450px;
       display : flex;
       flex-direction: column;
+      justify-content: end;
     }
   </style>

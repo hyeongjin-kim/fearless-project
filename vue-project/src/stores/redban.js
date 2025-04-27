@@ -6,5 +6,8 @@ export const useRedbanStore = defineStore('Redban', () => {
   function set_ban(target, index){
     Redban.value[index] = target;
   }
-  return { Redban, set_ban}
+  function reset(){
+    Redban.value = ["","","","",""];
+  }
+  return { Redban, set_ban, reset}
 })
