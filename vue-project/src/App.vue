@@ -1,7 +1,4 @@
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
-import HomeView from './views/BluePlayers.vue';
-import AboutView from './views/RedPlayers.vue';
 import GlobalBluebans from './views/GlobalBluebans.vue';
 import GlobalRedbans from './views/GlobalRedbans.vue';
 import Bans from './views/Bans.vue';
@@ -21,8 +18,8 @@ const setindex = useSetindexStore();
    
     <div class="total"> 
       <div class="audio-container">
-      <audio v-if="setindex.setindex < 5" :src="generalbgm" autoplay loop controls></audio>
-      <audio v-if="setindex.setindex == 5" :src="silver_scraps"  autoplay loop controls></audio>
+      <audio v-if="setindex.setindex < 5" :src="generalbgm" autoplay volume=0.3 loop controls></audio>
+      <audio v-if="setindex.setindex == 5" :src="silver_scraps"  autoplay volume=0.3 loop controls></audio>
     </div>
       <main>
         <GlobalBluebans></GlobalBluebans>
