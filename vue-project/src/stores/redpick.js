@@ -10,5 +10,8 @@ export const useRedpickStore = defineStore('Redpick', () => {
     Redpick.value = ["","","","",""];
     console.log(Redpick.value);
   }
-  return { Redpick, set_pick, reset}
+  function set_all(picks){
+    Redpick.value = picks;
+  }
+  return { Redpick, set_pick, reset, set_all}
 })

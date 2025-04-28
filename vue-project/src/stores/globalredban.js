@@ -9,5 +9,8 @@ export const useGlobalRedbanStore = defineStore('GlobalRedban', () => {
   function reset(){
     GlobalRedban.value = [];
   }
-  return { GlobalRedban, set_ban, reset}
+  function set_all(bans){
+    GlobalRedban.value = bans;
+  }
+  return { GlobalRedban, set_ban, reset, set_all}
 })

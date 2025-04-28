@@ -8,12 +8,22 @@ import Bans from './views/Bans.vue';
 import List from './views/List.vue';
 import BluePlayers from './views/BluePlayers.vue';
 import RedPlayers from './views/RedPlayers.vue';
+import { useSetindexStore } from '@/stores/setindex';
+import generalbgm from  '@/assets/data/general.m4a';
+import silver_scraps from '@/assets/data/Silver Scrapes.m4a';
+
+const setindex = useSetindexStore();
 
 </script>
 
 <template>
   <div class="content">
-    <div class="total">
+   
+    <div class="total"> 
+      <div class="audio-container">
+      <audio v-if="setindex.setindex < 5" :src="generalbgm" autoplay loop controls></audio>
+      <audio v-if="setindex.setindex == 5" :src="silver_scraps"  autoplay loop controls></audio>
+    </div>
       <main>
         <GlobalBluebans></GlobalBluebans>
         <List></List>
@@ -29,11 +39,20 @@ import RedPlayers from './views/RedPlayers.vue';
 </template>
 
 <style scoped>
+.content{
+  background-image: url(/src/assets/data/lck_dark_background_with_logo.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-attachment: fixed;
+  min-height: 100vh;
+}
   main{
     width: 2000px;
     height: 900px;
     display: flex;
     justify-content: space-between;
+    
   }
   .pick{
     width: 2000px;

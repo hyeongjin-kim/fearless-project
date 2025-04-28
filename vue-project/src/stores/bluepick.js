@@ -9,5 +9,8 @@ export const useBluepickStore = defineStore('Bluepick', () => {
   function reset(){
     Bluepick.value = ["","","","",""];
   }
-  return {Bluepick, set_pick, reset}
+  function set_all(picks){
+    Bluepick.value = picks;
+  }
+  return {Bluepick, set_pick, reset, set_all}
 })

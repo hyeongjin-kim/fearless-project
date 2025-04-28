@@ -9,5 +9,8 @@ export const useBluebanStore = defineStore('Blueban', () => {
   function reset(){
     Blueban.value = ["","","","",""];
   }
-  return {Blueban, set_ban, reset}
+  function set_all(bans){
+    Blueban.value = bans;
+  }
+  return {Blueban, set_ban, reset, set_all}
 })

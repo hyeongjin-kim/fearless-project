@@ -9,5 +9,8 @@ export const useRedbanStore = defineStore('Redban', () => {
   function reset(){
     Redban.value = ["","","","",""];
   }
-  return { Redban, set_ban, reset}
+  function set_all(bans){
+    Redban.value = bans;
+  }
+  return { Redban, set_ban, reset, set_all}
 })

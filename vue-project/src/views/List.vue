@@ -7,6 +7,7 @@ import { useBluepickStore } from '@/stores/bluepick';
 import { useRedpickStore } from '@/stores/redpick';
 import { useGlobalBluebanStore } from '@/stores/globalblueban';
 import { useGlobalRedbanStore } from '@/stores/globalredban';
+import { useSetindexStore } from '@/stores/setindex';
 
 const champions = ref([]);
 const current_champion = ref("");
@@ -15,10 +16,10 @@ const blueban = useBluebanStore();
 const bluepick = useBluepickStore();
 const redpick = useRedpickStore();
 const redban = useRedbanStore();
-const setindex = ref(1);
 const stateindex = ref(0);
 const globalredban = useGlobalRedbanStore();
 const globalblueban = useGlobalBluebanStore();
+const setindex = useSetindexStore();
 
 const statelist = ref([{phase: "Ban", turn: "Blue", index: 4},
                        {phase: "Ban", turn: "Red", index: 0},
@@ -96,14 +97,19 @@ function choose(id){
 function isDisabled(championId) {
   const globalBlueBanList = globalblueban.GlobalBlueban.flat();
   const globalRedBanList = globalredban.GlobalRedban.flat();
-  return blueban.Blueban.includes(championId)
+  return current_champion.value != championId
+      &&( blueban.Blueban.includes(championId)
       || redban.Redban.includes(championId)
       || bluepick.Bluepick.includes(championId)
       || redpick.Redpick.includes(championId)
       || globalBlueBanList.includes(championId)
-      || globalRedBanList.includes(championId)
+      || globalRedBanList.includes(championId))
       ;
 }
+function isselected(id){
+  return current_champion.value == id;
+}
+
 function Confirm(){
   if(!current_champion.value){
     alert("챔피언이 선택되지 않았습니다.");
@@ -117,15 +123,41 @@ function Confirm(){
 function GameConfirm(){
   stateindex.value = 0;
   state.value = statelist.value[stateindex.value];
-  setindex.value++;
-  globalredban.set_ban(redban.Redban);
-  globalblueban.set_ban(blueban.Blueban);
+  setindex.increase_setindex();
+  globalredban.set_ban(redpick.Redpick);
+  globalblueban.set_ban(bluepick.Bluepick);
+  blueban.reset();
+  redban.reset();
+  bluepick.reset();
+  redpick.reset();
+  swaped.value = false;
+}
+
+const swaped = ref(false);
+function Swap(){
+  swaped.value = true;
+  let tempban = blueban.Blueban;
+  blueban.set_all(redban.Redban);
+  redban.set_all(tempban);
+  let tempglobalben = globalblueban.GlobalBlueban;
+  globalblueban.set_all(globalredban.GlobalRedban);
+  globalredban.set_all(tempglobalben);
+  let temppick = bluepick.Bluepick;
+  bluepick.set_all(redpick.Redpick);
+  redpick.set_all(temppick);
+}
+
+function cleargame(){
+  setindex.reset();
+  stateindex.value = 0;
+  state.value = statelist.value[0];
+  globalblueban.reset();
+  globalredban.reset();
   blueban.reset();
   redban.reset();
   bluepick.reset();
   redpick.reset();
 }
-
 </script>
 
 <template>
@@ -134,22 +166,30 @@ function GameConfirm(){
       <div 
         v-for="champ in champions" 
         :key="champ.id" 
-        class="champion-card"
-        :class="{ disabled: isDisabled(champ.id) }"
+        :class="['champion-card', {disabled: isDisabled(champ.id)}]"
+
       >
+      <img 
+        :src="`https://ddragon.leagueoflegends.com/cdn/${version.version}/img/champion/${champ.id}.png`" 
+        :alt="champ.name"
+        class="champion-icon"
+        :class="{ selected: isselected(champ.id) }"
+        @click="choose(champ.id)"
+      />
         <img 
-          :src="`https://ddragon.leagueoflegends.com/cdn/${version.version}/img/champion/${champ.id}.png`" 
-          :alt="champ.name" 
-          class="champion-icon"
-          v-on:click="choose(champ.id)"
+        v-if="isDisabled(champ.id)" 
+        src="@/assets/data/banned_overlay.png"
+        class="banned-overlay"
         />
-        <p>{{ champ.name }}</p>
+        <p style="color: white" >{{ champ.name }}</p>
       </div>
     </div>
     <div class="confirmbtn-container">
       <button v-if="state.phase == 'Pick'" class="confirm" @click="Confirm()">챔피언 선택</button>
       <button v-if="state.phase == 'Ban'" class="confirm" @click="Confirm()">챔피언 금지</button>
-      <button v-if="state.phase == 'Done' || setindex.value < 5" class="confirm" @click="GameConfirm()">{{setindex}}세트 종료</button>
+      <button v-if="state.phase == 'Done' && setindex.setindex < 5" class="confirm" @click="GameConfirm()">{{setindex.setindex}}세트 종료</button>
+      <button v-if="state.phase == 'Done' && swaped == false && setindex.setindex < 5" class="swapbtn" @click="Swap()">진영 변경</button>
+      <button v-if="state.phase == 'Done' && setindex.setindex == 5" class="gameover" @click="cleargame()">경기 종료</button>
     </div>
   </div>
   
@@ -164,9 +204,9 @@ function GameConfirm(){
   overflow-y: auto;
 }
 .champion-card {
-  box-sizing: border-box;
   text-align: center;
   font-size: 12px;
+  position: relative; 
   cursor: pointer;
   transition: opacity 0.3s;
 }
@@ -178,6 +218,11 @@ function GameConfirm(){
   width: 96px;
   height: 96px;
   object-fit: contain;
+}
+
+.champion-icon.selected {
+  border: 2px solid white;
+  box-sizing: border-box;
 }
 .list-container{
   height: 900px;
@@ -191,5 +236,26 @@ function GameConfirm(){
   width: 200px;
   height: 50px;
   font-size: 30px;
+}
+.swapbtn{
+  margin-top: 20px;
+  width: 200px;
+  height: 50px;
+  font-size: 30px;
+}
+.gameover{
+  margin-top: 20px;
+  width: 200px;
+  height: 50px;
+  font-size: 30px;
+}
+.banned-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 96px;
+  height: 96px;
+  opacity: 0.7; 
+  pointer-events: none;
 }
 </style>

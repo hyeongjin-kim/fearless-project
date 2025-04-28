@@ -9,5 +9,8 @@ export const useGlobalBluebanStore = defineStore('useGlobalBlueban', () => {
   function reset(){
     GlobalBlueban.value = [];
   }
-  return {GlobalBlueban, set_ban, reset}
+  function set_all(bans){
+    GlobalBlueban.value = bans;
+  }
+  return {GlobalBlueban, set_ban, reset, set_all}
 })
