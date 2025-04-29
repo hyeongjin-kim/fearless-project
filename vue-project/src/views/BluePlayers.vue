@@ -1,26 +1,58 @@
 <script setup>
   import { useBluepickStore } from '@/stores/bluepick';
+ 
+  import { ref } from 'vue';
   import topimg from '@/assets/data/top.png'
   import jugimg from '@/assets/data/jug.png'
   import midimg from '@/assets/data/mid.png'
   import botimg from '@/assets/data/bot.png'
   import supimg from '@/assets/data/sup.png'
+  
   const imglist = [supimg, botimg, midimg, jugimg, topimg];
   
   const bluepick = useBluepickStore();
+ 
+
+  let players_to_swap = ref([]);
+
+  function isselected(index){
+    return players_to_swap.value.includes(index);
+  }
+  function swap(index){
+    
+    if(players_to_swap.value.includes(index)) return;
+    players_to_swap.value.push(index);
+    console.log(players_to_swap.value);
+    //if() 페이즈가 완료상태일 때만 가능하게 해야함
+    if(players_to_swap.value.length == 2){
+      let temp = bluepick.Bluepick[players_to_swap.value[0]];
+      bluepick.set_pick(bluepick.Bluepick[players_to_swap.value[1]], players_to_swap.value[0]);
+      bluepick.set_pick(temp, players_to_swap.value[1]);
+      players_to_swap.value = [];
+    }
+  }
 </script>
 
 <template>
   <div class="Linfo">
-    <img v-for="(pick, index) in bluepick.Bluepick" :key="index" :src=" pick?`https://ddragon.leagueoflegends.com/cdn/img/champion/loading/${pick}_0.jpg`:imglist[index]" alt="" width="154px" height="280px" >
+    <img v-for="(pick, index) in bluepick.Bluepick" :key="index"
+    class="championiller"
+    :class="{target_to_swap: isselected(index)}"
+    :src=" pick?`https://ddragon.leagueoflegends.com/cdn/img/champion/loading/${pick}_0.jpg`:imglist[index]"
+     alt="" width="154px" height="280px" @click="swap(index)">
+
   </div>
 
 </template>
 
-<style>
+<style scoped>
   .Linfo{
     width: 770px;
     height: 280px;
     /* border: 3px blue solid; */
+  }
+  .championiller.target_to_swap{
+    box-sizing: border-box;
+    border: 2px white solid;
   }
 </style>

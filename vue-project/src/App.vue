@@ -1,4 +1,5 @@
 <script setup>
+import { ref, watch } from 'vue';
 import GlobalBluebans from './views/GlobalBluebans.vue';
 import GlobalRedbans from './views/GlobalRedbans.vue';
 import Bans from './views/Bans.vue';
@@ -10,55 +11,67 @@ import generalbgm from  '@/assets/data/general.m4a';
 import silver_scraps from '@/assets/data/Silver Scrapes.m4a';
 
 const setindex = useSetindexStore();
+const audioRef = ref(null);
+let isPlayed = false;
+const bgm = ref(generalbgm);
 
+watch(() => setindex.setindex, (newVal) => {
+  if (newVal == 5) {
+    audioRef.value.volume = 0.3;
+    bgm.value = silver_scraps;
+  } else {
+    bgm.value = generalbgm;
+  }
+});
+
+function handleClick() {
+  if (!audioRef.value) return;
+
+  if (audioRef.value.paused) {
+    
+    audioRef.value.play().catch((e) => {
+      console.error('Autoplay error:', e);
+    });
+  }
+}
 </script>
 
 <template>
-  <div class="content">
-   
-    <div class="total"> 
-      <div class="audio-container">
-      <audio v-if="setindex.setindex < 5" :src="generalbgm" autoplay volume=0.3 loop controls></audio>
-      <audio v-if="setindex.setindex == 5" :src="silver_scraps"  autoplay volume=0.3 loop controls></audio>
+  <main @touchstart="handleClick" @click="handleClick">
+    <div class="audio-container" >
+      <audio ref="audioRef" :src="bgm" loop controls></audio>
     </div>
-      <main>
-        <GlobalBluebans></GlobalBluebans>
-        <List></List>
-        <GlobalRedbans></GlobalRedbans>
-      </main>
-      <Bans> </Bans>
-      <div class="pick">
-        <BluePlayers></BluePlayers>
-        <RedPlayers></RedPlayers>
-      </div>
+    <div class="list-globalban-container">
+      <GlobalBluebans></GlobalBluebans>
+      <List></List>
+      <GlobalRedbans></GlobalRedbans>
     </div>
-  </div>
+    <Bans> </Bans>
+    <div class="players">
+      <BluePlayers></BluePlayers>
+      <RedPlayers></RedPlayers>
+    </div>
+  </main>
 </template>
 
 <style scoped>
-.content{
-  background-image: url(/src/assets/data/lck_dark_background_with_logo.png);
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-attachment: fixed;
-  min-height: 100vh;
-}
   main{
-    width: 2000px;
-    height: 900px;
     display: flex;
-    justify-content: space-between;
-    
-  }
-  .pick{
-    width: 2000px;
-    height: 280px;
-    display: flex;
+    background-image: url(/src/assets/data/lck_dark_background_with_logo.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: fixed;
+    min-height: 100vh;
+    flex-direction: column;
     justify-content: space-between;
   }
-  .content{
+  .list-globalban-container{
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
+  }
+  .players{
+    display: flex;
+    justify-content: space-between;
   }
 </style>
