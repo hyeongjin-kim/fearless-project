@@ -46,7 +46,7 @@ function handleClick() {
       <List></List>
       <GlobalRedbans></GlobalRedbans>
     </div>
-    <Bans> </Bans>
+    <Bans></Bans>
     <div class="players">
       <BluePlayers></BluePlayers>
       <RedPlayers></RedPlayers>
@@ -57,12 +57,6 @@ function handleClick() {
 <style scoped>
   main{
     display: flex;
-    background-image: url(/src/assets/data/lck_dark_background_with_logo.png);
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-attachment: fixed;
-    min-height: 100vh;
     flex-direction: column;
     justify-content: space-between;
   }

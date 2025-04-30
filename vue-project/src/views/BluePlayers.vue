@@ -7,11 +7,11 @@
   import midimg from '@/assets/data/mid.png'
   import botimg from '@/assets/data/bot.png'
   import supimg from '@/assets/data/sup.png'
-  
+  import { UseStateStore } from '@/stores/state';
   const imglist = [supimg, botimg, midimg, jugimg, topimg];
   
   const bluepick = useBluepickStore();
- 
+  const state = UseStateStore();
 
   let players_to_swap = ref([]);
 
@@ -19,17 +19,18 @@
     return players_to_swap.value.includes(index);
   }
   function swap(index){
+    if(state.state.phase != 'Done') return;
+    if(players_to_swap.value.includes(index)) players_to_swap.value = [];
+    else{
+      players_to_swap.value.push(index);
     
-    if(players_to_swap.value.includes(index)) return;
-    players_to_swap.value.push(index);
-    console.log(players_to_swap.value);
-    //if() 페이즈가 완료상태일 때만 가능하게 해야함
-    if(players_to_swap.value.length == 2){
-      let temp = bluepick.Bluepick[players_to_swap.value[0]];
-      bluepick.set_pick(bluepick.Bluepick[players_to_swap.value[1]], players_to_swap.value[0]);
-      bluepick.set_pick(temp, players_to_swap.value[1]);
-      players_to_swap.value = [];
-    }
+      if(players_to_swap.value.length == 2){
+        let temp = bluepick.Bluepick[players_to_swap.value[0]];
+        bluepick.set_pick(bluepick.Bluepick[players_to_swap.value[1]], players_to_swap.value[0]);
+        bluepick.set_pick(temp, players_to_swap.value[1]);
+        players_to_swap.value = [];
+      }
+    } 
   }
 </script>
 
