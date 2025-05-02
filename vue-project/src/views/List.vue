@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed, watch } from 'vue';
 import { useVersionStore } from '@/stores/version.js';
 import { useBluebanStore } from '@/stores/blueban';
 import { useRedbanStore } from '@/stores/redban';
@@ -10,7 +10,11 @@ import { useGlobalRedbanStore } from '@/stores/globalredban';
 import { useSetindexStore } from '@/stores/setindex';
 import { UseStateStore } from '@/stores/state';
 
+
 const champions = ref([]);
+const current_filter = ref({"top" : false, "jug":false , "mid":false, "bot": false, "sup": false, "all": true});
+const line_champions = ref({"top" : [], "jug":[] , "mid":[], "bot": [], "sup": [] });
+const champion_list = ref([]);
 const current_champion = ref("");
 const version = useVersionStore();
 const blueban = useBluebanStore();
@@ -21,10 +25,15 @@ const globalredban = useGlobalRedbanStore();
 const globalblueban = useGlobalBluebanStore();
 const setindex = useSetindexStore();
 const state = UseStateStore();
+const nicknameMap = ref({});
+const searchQuery = ref("");
 
 onMounted(async () => {
   await Get_version();
   await Get_Champion();
+  await Get_line_Champion();
+  await Get_nickname();
+  onSearchInput({ target: { value: "" } });
 });
 
 async function Get_version(){
@@ -44,6 +53,26 @@ async function Get_Champion(){
     id: champ.id,
     name: champ.name,
   })).sort((a, b) => a.name.localeCompare(b.name, 'ko-KR'));
+  champion_list.value = champions.value;
+}
+
+async function Get_line_Champion() {
+  const line = ["top", "jug", "mid", "bot", "sup"];
+  for (let i = 0; i < 5; i++) {
+    const res = await fetch(`/${line[i]}_champions.json`);
+    const data = await res.json();
+
+    line_champions.value[line[i]] = data.sort(
+      (a, b) => a.name.localeCompare(b.name, 'ko-KR')
+    );
+  }
+}
+
+async function Get_nickname(){
+  const res = await fetch(`/nicknames.json`);
+  const data = await res.json();
+
+  nicknameMap.value = data;
 }
 
 function choose(id){
@@ -128,13 +157,66 @@ function cleargame(){
   bluepick.reset();
   redpick.reset();
 }
+
+function champ_filter(line) {
+  if (!current_filter.value[line]) {
+    Object.keys(current_filter.value).forEach(key => {
+      current_filter.value[key] = false;
+    });
+    champion_list.value = line_champions.value[line];
+    current_filter.value[line] = true;
+  } else {
+    current_filter.value[line] = false;
+    current_filter.value.all = true;
+    champion_list.value = champions.value;
+  }
+}
+
+function is_filtered(line){
+  return current_filter.value[line];
+}
+
+function onSearchInput(e) {
+  const keyword = normalize(e.target.value);
+
+  const line = Object.keys(current_filter.value).find(key => current_filter.value[key]) || 'all';
+
+  const baseList = (line === 'all') ? champions.value : line_champions.value[line];
+
+  if (!keyword) {
+    champion_list.value = baseList; // 검색어 없으면 필터만 적용
+    return;
+  }
+
+  champion_list.value = baseList.filter(champ => {
+    const id = champ.id;
+    const allNames = nicknameMap.value[id];
+    return allNames.some(name => normalize(name).includes(keyword));
+  });
+}
+
+function normalize(str) {
+  return str.replace(/\s/g, "").toLowerCase();
+}
+
 </script>
 
 <template>
+  
   <div class="list-container">
+    <div class="filter-container"  v-if="state.state.phase != 'Done'">
+      <div class="positions">
+        <img src="/src/assets/data/top_icon.png" alt="" class="filter" :class="{filtered : is_filtered('top')}" @click="champ_filter('top')">
+        <img src="/src/assets/data/jug_icon.png" alt="" class="filter" :class="{filtered : is_filtered('jug')}" @click="champ_filter('jug')">
+        <img src="/src/assets/data/mid_icon.png" alt="" class="filter" :class="{filtered : is_filtered('mid')}" @click="champ_filter('mid')">
+        <img src="/src/assets/data/bot_icon.png" alt="" class="filter" :class="{filtered : is_filtered('bot')}" @click="champ_filter('bot')">
+        <img src="/src/assets/data/sup_icon.png" alt="" class="filter" :class="{filtered : is_filtered('sup')}" @click="champ_filter('sup')">
+      </div>
+      <input type="text" class="search-bar" v-model="searchQuery" @input="onSearchInput" placeholder="챔피언 이름을 입력하세요.">
+    </div>
     <div class="champion-grid" v-if="state.state.phase != 'Done'">
       <div 
-        v-for="champ in champions" 
+        v-for="champ in champion_list" 
         :key="champ.id" 
         :class="['champion-card', {disabled: isDisabled(champ.id)}]"
 
@@ -155,6 +237,7 @@ function cleargame(){
     </div>
     <div v-if="state.state.phase == 'Done'" class="swap-anouncement">두 챔피언 초상화를 클릭해 포지션을 바꿀 수 있습니다.</div>
     <div v-if="state.state.phase == 'Done'" class="swap-anouncement">포지션에 맞게 스왑해주세요.</div>
+    
     <div class="confirmbtn-container">
       <div class="game-end-btn-container">
         <button v-if="state.state.phase == 'Pick'" class="confirm" @click="Confirm()">챔피언 선택</button>
@@ -173,8 +256,11 @@ function cleargame(){
   display: grid;
   grid-template-columns: repeat(8, 1fr);
   gap: 8px;
-  max-height: 750px;
+  height: 60vh;
+  width: 55vw;
+  max-height: 60vh;
   overflow-y: auto;
+  align-content: start; 
 }
 .champion-card {
   text-align: center;
@@ -204,7 +290,8 @@ function cleargame(){
   box-sizing: border-box;
 }
 .list-container{
-  height: 70vh;
+  height: 60vh;
+  width: 55vw;
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -240,5 +327,31 @@ function cleargame(){
 .game-end-btn-container{
   display: flex;
   justify-content: space-between;
+}
+.filter-container{
+  width: inherit;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.positions{
+  width: 700px;
+  display: flex;
+  justify-content: left;
+}
+.filter{
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  margin-right: 15px;
+
+}
+.search-bar{
+  width: 200px;
+  height: 40px;
+}
+.filter.filtered{
+  border: 2px solid white;
+  box-sizing: border-box;
 }
 </style>
