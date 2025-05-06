@@ -17,7 +17,7 @@ const bgm = ref(generalbgm);
 
 watch(() => setindex.setindex, (newVal) => {
   if (newVal == 5) {
-    audioRef.value.volume = 0.3;
+    audioRef.value.volume = 0.2;
     bgm.value = silver_scraps;
   } else {
     bgm.value = generalbgm;
