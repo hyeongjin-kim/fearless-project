@@ -1,5 +1,5 @@
 <script setup>
-  import { useBluepickStore } from '@/stores/bluepick';
+  import { useBluepickStore } from '@/stores/Blue_Pick';
  
   import { ref } from 'vue';
   import topimg from '@/assets/data/top.png'
@@ -7,7 +7,7 @@
   import midimg from '@/assets/data/mid.png'
   import botimg from '@/assets/data/bot.png'
   import supimg from '@/assets/data/sup.png'
-  import { UseStateStore } from '@/stores/state';
+  import { UseStateStore } from '@/stores/State';
   const imglist = [supimg, botimg, midimg, jugimg, topimg];
   
   const bluepick = useBluepickStore();
@@ -40,7 +40,7 @@
     class="championiller"
     :class="{target_to_swap: isselected(index)}"
     :src=" pick?`https://ddragon.leagueoflegends.com/cdn/img/champion/loading/${pick}_0.jpg`:imglist[index]"
-     alt="" width="154px" height="280px" @click="swap(index)">
+     alt="" @click="swap(index)">
 
   </div>
 
@@ -48,9 +48,13 @@
 
 <style scoped>
   .Linfo{
-    width: 770px;
-    height: 280px;
+    width: auto;
+    height: 25vh;
     /* border: 3px blue solid; */
+  }
+  .championiller{
+    width: auto;
+    height: 25vh;
   }
   .championiller.target_to_swap{
     box-sizing: border-box;

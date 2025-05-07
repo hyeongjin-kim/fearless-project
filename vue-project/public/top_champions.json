@@ -28,10 +28,6 @@
     "name": "다리우스"
   },
   {
-    "id": "Ryze",
-    "name": "라이즈"
-  },
-  {
     "id": "Rumble",
     "name": "럼블"
   },
@@ -156,10 +152,6 @@
     "name": "잭스"
   },
   {
-    "id": "Zed",
-    "name": "제드"
-  },
-  {
     "id": "Jayce",
     "name": "제이스"
   },
@@ -198,10 +190,6 @@
   {
     "id": "Trundle",
     "name": "트런들"
-  },
-  {
-    "id": "Tristana",
-    "name": "트리스타나"
   },
   {
     "id": "Tryndamere",

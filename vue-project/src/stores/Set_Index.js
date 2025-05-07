@@ -1,7 +1,7 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
 
-export const useSetindexStore = defineStore('setindex', () => {
+export const useSetindexStore = defineStore('SetIndex', () => {
   const setindex = ref(1);
   function increase_setindex(){
     setindex.value += 1;

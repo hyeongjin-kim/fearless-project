@@ -6,7 +6,7 @@ import Bans from './views/Bans.vue';
 import List from './views/List.vue';
 import BluePlayers from './views/BluePlayers.vue';
 import RedPlayers from './views/RedPlayers.vue';
-import { useSetindexStore } from '@/stores/setindex';
+import { useSetindexStore } from '@/stores/Set_Index';
 import generalbgm from  '@/assets/data/general.m4a';
 import silver_scraps from '@/assets/data/Silver Scrapes.m4a';
 

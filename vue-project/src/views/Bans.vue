@@ -1,8 +1,8 @@
 <script setup> 
-  import { useSetindexStore } from '@/stores/setindex';
+  import { useSetindexStore } from '@/stores/Set_Index';
   import {useVersionStore} from '@/stores/version.js'
-  import { useBluebanStore } from '@/stores/blueban';
-  import { useRedbanStore } from '@/stores/redban';
+  import { useBluebanStore } from '@/stores/Blue_Ban';
+  import { useRedbanStore } from '@/stores/Red_Ban';
   import default_img from '@/assets/data/unknown.jpg';
   const setindex = useSetindexStore();
   const version = useVersionStore();
@@ -40,7 +40,7 @@
   <style scoped>
     .Binfo{
       
-      height: 124px;
+      height: 8vh + 24;
       /* border: 3px black solid; */
       display: flex;
       justify-content: space-between;
@@ -48,14 +48,14 @@
     .blue-bancontainer {
       display: flex;
       width: 1000px;
-      height: 124px;
+      height: 8vh + 24;
       flex-direction: column;
       flex-wrap: nowrap; /* 줄바꿈 없이 */
       gap: 0;            /* 간격 없이 딱 붙게 */
     }
     .red-bancontainer {
       width: 1000px;
-      height: 124px;
+      height: 8vh + 24;
       display: flex;
       flex-direction: column;
       align-items: end;
@@ -64,8 +64,8 @@
     }
     .bannd {
       position: relative;
-      width: 100px;
-      height: 100px;
+      width: 8vh;
+      height: 8vh;
     }
     .bluebans{
       display: flex;

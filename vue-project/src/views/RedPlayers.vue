@@ -1,12 +1,12 @@
 <script setup>
   import {ref} from 'vue'
-  import { useRedpickStore } from '@/stores/redpick';
+  import { useRedpickStore } from '@/stores/Red_Pick';
   import topimg from '@/assets/data/top.png'
   import jugimg from '@/assets/data/jug.png'
   import midimg from '@/assets/data/mid.png'
   import botimg from '@/assets/data/bot.png'
   import supimg from '@/assets/data/sup.png'
-  import { UseStateStore } from '@/stores/state';
+  import { UseStateStore } from '@/stores/State';
   const imglist = [topimg, jugimg, midimg, botimg, supimg];
   const redpick = useRedpickStore();
   const state = UseStateStore();
@@ -36,15 +36,19 @@
     class="championiller"
     :class="{target_to_swap: isselected(index)}"
     :src=" pick?`https://ddragon.leagueoflegends.com/cdn/img/champion/loading/${pick}_0.jpg`:imglist[index]"
-     alt="" @click="swap(index)" width="154px" height="280px" >
+     alt="" @click="swap(index)" >
   </div>
 </template>
 
 <style>
   .Rinfo{
-    width: 770px;
-    height: 280px;
+    width: auto;
+    height: 25vh;
     /* border: 3px red solid; */
+  }
+  .championiller{
+    width: auto;
+    height: 25vh;
   }
   .championiller.target_to_swap{
     box-sizing: border-box;

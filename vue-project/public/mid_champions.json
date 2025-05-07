@@ -12,6 +12,10 @@
     "name": "니코"
   },
   {
+    "id": "Diana",
+    "name": "다이애나"
+  },
+  {
     "id": "Ryze",
     "name": "라이즈"
   },
@@ -46,10 +50,6 @@
   {
     "id": "Velkoz",
     "name": "벨코즈"
-  },
-  {
-    "id": "Brand",
-    "name": "브랜드"
   },
   {
     "id": "Vladimir",
@@ -150,10 +150,6 @@
   {
     "id": "Kassadin",
     "name": "카사딘"
-  },
-  {
-    "id": "Karthus",
-    "name": "카서스"
   },
   {
     "id": "Cassiopeia",

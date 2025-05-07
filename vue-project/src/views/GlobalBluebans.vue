@@ -1,6 +1,6 @@
 <script setup>
 import {useVersionStore} from '@/stores/version.js'
-import { useGlobalBluebanStore } from '@/stores/globalblueban';
+import { useGlobalBluebanStore } from '@/stores/Blue_Global_Ban';
 const version = useVersionStore();
 const globalblueban = useGlobalBluebanStore();
 </script>
@@ -11,7 +11,7 @@ const globalblueban = useGlobalBluebanStore();
       <div style="color : white">Game {{index + 1}} </div>
       <div class="ban-container">
         <div v-for="(ban, i) in game" :key="i" class="globalbannd">
-          <img  :src= "ban?`https://ddragon.leagueoflegends.com/cdn/${version.version}/img/champion/${ban}.png`:default_img" alt="" width = "90px" height = "90px"/>
+          <img  :src= "ban?`https://ddragon.leagueoflegends.com/cdn/${version.version}/img/champion/${ban}.png`:default_img" class="bans" alt=""/>
           <img src="@/assets/data/banned_overlay_90.png" class="banned-overlay"/>
         </div>
       </div>
@@ -23,17 +23,17 @@ const globalblueban = useGlobalBluebanStore();
   
   <style>
     .BlueGlobalBan{
-      width: 450px;
-      height: 120px;
+      width: 30vh;
+      height: 6vh + 24;
       /* border: 3px purple solid; */
     }
     .ban-container{
-      width: 450px;
+      width: 30vh;
       display: flex;
       
     }
     .BlueGlobalBan-container{
-      width: 450px;
+      width: 30vh;
       
       display : flex;
       flex-direction: column;
@@ -41,6 +41,11 @@ const globalblueban = useGlobalBluebanStore();
     }
     .globalbannd{
       position: relative;
+      
+    }
+    .bans{
+      width: auto;
+      height: 6vh;
     }
     .banned-overlay {
       position: absolute;

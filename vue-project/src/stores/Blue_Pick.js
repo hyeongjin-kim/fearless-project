@@ -1,7 +1,7 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
 
-export const useBluepickStore = defineStore('Bluepick', () => {
+export const useBluepickStore = defineStore('Blue_Pick', () => {
   const Bluepick = ref(["","","","",""])
   function set_pick(target, index){
     Bluepick.value[index] = target;

@@ -1,7 +1,7 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
 
-export const useBluebanStore = defineStore('Blueban', () => {
+export const useBluebanStore = defineStore('Blue_Ban', () => {
   const Blueban = ref(["","","","",""])
   function set_ban(target, index){
     Blueban.value[index] = target;
