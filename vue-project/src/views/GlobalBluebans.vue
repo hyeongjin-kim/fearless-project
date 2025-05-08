@@ -21,7 +21,7 @@ const globalblueban = useGlobalBluebanStore();
     
   </template>
   
-  <style>
+  <style scoped>
     .BlueGlobalBan{
       width: 30vh;
       height: 6vh + 24;
@@ -30,18 +30,15 @@ const globalblueban = useGlobalBluebanStore();
     .ban-container{
       width: 30vh;
       display: flex;
-      
     }
     .BlueGlobalBan-container{
       width: 30vh;
-      
       display : flex;
       flex-direction: column;
       justify-content: end;
     }
     .globalbannd{
       position: relative;
-      
     }
     .bans{
       width: auto;

@@ -9,10 +9,11 @@ import RedPlayers from './views/RedPlayers.vue';
 import { useSetindexStore } from '@/stores/Set_Index';
 import generalbgm from  '@/assets/data/general.m4a';
 import silver_scraps from '@/assets/data/Silver Scrapes.m4a';
+import Red_Bans from './views/Red_Bans.vue';
+import Blue_Bans from './views/Blue_Bans.vue';
 
 const setindex = useSetindexStore();
 const audioRef = ref(null);
-let isPlayed = false;
 const bgm = ref(generalbgm);
 
 watch(() => setindex.setindex, (newVal) => {
@@ -41,15 +42,18 @@ function handleClick() {
     <div class="audio-container" >
       <audio ref="audioRef" :src="bgm" loop controls></audio>
     </div>
-    <div class="list-globalban-container">
-      <GlobalBluebans></GlobalBluebans>
-      <List></List>
-      <GlobalRedbans></GlobalRedbans>
+    <div class="container">
+      <GlobalBluebans/>
+      <List/>
+      <GlobalRedbans/>
     </div>
-    <Bans></Bans>
-    <div class="players">
-      <BluePlayers></BluePlayers>
-      <RedPlayers></RedPlayers>
+    <div class="container">
+      <Blue_Bans/>
+      <Red_Bans/>
+    </div>
+    <div class="container">
+      <BluePlayers/>
+      <RedPlayers/>
     </div>
   </main>
 </template>
@@ -60,11 +64,11 @@ function handleClick() {
     flex-direction: column;
     justify-content: space-between;
   }
-  .list-globalban-container{
+  .audio-container{
     display: flex;
-    justify-content: space-between;
+    justify-content: end;
   }
-  .players{
+  .container{
     display: flex;
     justify-content: space-between;
   }

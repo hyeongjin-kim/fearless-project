@@ -39,5 +39,5 @@ export const UseStateStore = defineStore('State', ()=>{
         stateindex.value = 0;
         state.value = statelist.value[stateindex.value];
     }
-    return {state, stateindex, next_state, reset}
+    return {state, next_state, reset}
 })

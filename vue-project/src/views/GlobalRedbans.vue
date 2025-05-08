@@ -21,19 +21,17 @@
     
   </template>
   
-  <style>
+  <style scoped>
     .RedGlobalBan{
       width: 30vh;
       height: 6vh + 24;
       display: flex;
       flex-direction: column;
       align-items: end;
-      /* border: 3px purple solid; */
     }
     .ban-container{
       width: 30vh;
       display: flex;
-      
     }
     .RedGlobalBan-container{
       width: 30vh;

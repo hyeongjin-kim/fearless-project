@@ -35,7 +35,7 @@
 </script>
 
 <template>
-  <div class="Linfo">
+  <div class="Blue_Player">
     <img v-for="(pick, index) in bluepick.Bluepick" :key="index"
     class="championiller"
     :class="{target_to_swap: isselected(index)}"
@@ -47,10 +47,11 @@
 </template>
 
 <style scoped>
-  .Linfo{
+  .Blue_Player{
+    display: flex;
     width: auto;
     height: 25vh;
-    /* border: 3px blue solid; */
+    flex-wrap: nowrap;
   }
   .championiller{
     width: auto;

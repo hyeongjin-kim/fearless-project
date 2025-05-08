@@ -31,7 +31,7 @@
 </script>
 
 <template>
-  <div class="Rinfo">
+  <div class="Red_Player">
     <img v-for="(pick, index) in redpick.Redpick" :key="index"
     class="championiller"
     :class="{target_to_swap: isselected(index)}"
@@ -40,11 +40,12 @@
   </div>
 </template>
 
-<style>
-  .Rinfo{
+<style scoped>
+  .Red_Player{
+    display: flex;
     width: auto;
     height: 25vh;
-    /* border: 3px red solid; */
+    flex-wrap: nowrap;
   }
   .championiller{
     width: auto;
