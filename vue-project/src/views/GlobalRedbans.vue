@@ -1,6 +1,7 @@
 <script setup>
   import {useVersionStore} from '@/stores/version.js'
   import { useGlobalRedbanStore } from '@/stores/Red_Global_Ban';
+  import default_img from '@/assets/data/unknown.jpg';
   const version = useVersionStore();
   const globalredban = useGlobalRedbanStore();
 </script>
@@ -17,44 +18,40 @@
       </div>
     </div>
   </div>
-    
-    
-  </template>
+</template>
   
-  <style scoped>
-    .RedGlobalBan{
-      width: 30vh;
-      height: 6vh + 24;
-      display: flex;
-      flex-direction: column;
-      align-items: end;
-    }
-    .ban-container{
-      width: 30vh;
-      display: flex;
-    }
-    .RedGlobalBan-container{
-      width: 30vh;
-      display : flex;
-      flex-direction: column;
-      justify-content: end;
-    }
-    .globalbannd{
-      position: relative;
-      
-    }
-    .bans{
-      width: auto;
-      height: 6vh;
-    }
-    .global_banned-overlay {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      opacity: 0.6;
-      pointer-events: none;
-    }
-
+<style scoped>
+  .RedGlobalBan{
+    width: 30vh;
+    height: 6vh + 24;
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+  }
+  .ban-container{
+    width: 30vh;
+    display: flex;
+  }
+  .RedGlobalBan-container{
+    width: 30vh;
+    display : flex;
+    flex-direction: column;
+    justify-content: end;
+  }
+  .globalbannd{
+    position: relative;
+  }
+  .bans{
+    width: auto;
+    height: 6vh;
+  }
+  .global_banned-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.6;
+    pointer-events: none;
+  }
 </style>

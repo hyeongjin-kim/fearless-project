@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import { useVersionStore } from '@/stores/version';
 import { useGlobalBluebanStore } from '@/stores/Blue_Global_Ban';
 import { useGlobalRedbanStore } from '@/stores/Red_Global_Ban';
@@ -8,6 +8,7 @@ import { useRedbanStore } from '@/stores/Red_Ban';
 import { UseStateStore } from '@/stores/State';
 import { useBluepickStore } from '@/stores/Blue_Pick';
 import { useRedpickStore } from '@/stores/Red_Pick';
+import { UseTimerStore } from '@/stores/Timer';
 
 const Red_Ban_Store = useRedbanStore();
 const Red_Global_Ban_Store = useGlobalRedbanStore();
@@ -20,7 +21,7 @@ const Blue_Pick_Store = useBluepickStore();
 const Version_Store = useVersionStore();
 
 const State_Store = UseStateStore();
-
+const Timer_Store = UseTimerStore();
 
 const props = defineProps(
     ['championListProp']
@@ -64,22 +65,24 @@ function isDisabled(championId) {
       || globalRedBanList.includes(championId));
 }
 
+const emit = defineEmits(["confirm"]);
+
+watch( ()=> Timer_Store.timer, (time)=>{
+  if(time == 0){
+    Confirm();
+  }
+})
 
 function Confirm(){
-  //시간제한을 구현해야 함 아직까지는 선택 안하면 선택하라고 돌려보냄
-  if(!Selected_Champion.value){
-    alert("챔피언이 선택되지 않았습니다.");
-    return;
-  }
+  emit('confirm', Selected_Champion);
   Selected_Champion.value = "";
-  State_Store.next_state();
 }
 
 </script>
 
 <template>
-    <main>
-        <div class="champion-grid" v-if="championListProp">
+  <main>
+    <div class="champion-grid" v-if="championListProp">
       <div 
         v-for="champ in championListProp" 
         :key="champ.id" 
@@ -91,7 +94,7 @@ function Confirm(){
         :class="['champion-icon', { selected: isselected(champ.id) }]"
         @click="choose(champ.id)"
       />
-        <img 
+      <img 
         v-if="isDisabled(champ.id)" 
         src="@/assets/data/banned_overlay.png"
         class="banned-overlay"
@@ -100,64 +103,61 @@ function Confirm(){
       </div>
     </div>
     <div class="confirmbtn-container">
-        <button v-if="State_Store.state.phase == 'Pick'" class="confirm" @click="Confirm()">챔피언 선택</button>
-        <button v-if="State_Store.state.phase == 'Ban'" class="confirm" @click="Confirm()">챔피언 금지</button>
+      <button v-if="State_Store.state.phase == 'Pick'" class="confirm" @click="Confirm()">챔피언 선택</button>
+      <button v-if="State_Store.state.phase == 'Ban'" class="confirm" @click="Confirm()">챔피언 금지</button>
     </div>
-    </main>
-    
-    
-
+  </main>
 </template>
 
 <style scoped>
-
-    .champion-grid {
-        display: grid;
-        grid-template-columns: repeat(8, 1fr);
-        gap: 8px;
-        height: 50vh;
-        width: 90vh;
-        max-height: 60vh;
-        overflow-y: auto;
-        align-content: start; 
-    }
-    .champion-card {
-        text-align: center;
-        font-size: 20px;
-        position: relative; 
-        cursor: pointer;
-        transition: opacity 0.3s;
-    }
-    .champion-card.disabled {
-        opacity: 0.4;
-        pointer-events: none;
-    }
-    .champion-icon {
-        width: auto;
-        height: 8vh;
-        object-fit: contain;
-    }
-    .champion-icon.selected {
-        border: 2px solid white;
-        box-sizing: border-box;
-    }
-    .confirmbtn-container{
-        display: flex;
-        justify-content: center;
-    }
-    .confirm{
-        margin-top: 20px;
-        width: 200px;
-        height: 50px;
-        font-size: 30px;
-    }
-    .banned-overlay {
-        position: absolute;
-        top: 0;
-        left: 1.2vh;
-        width: auto;
-        height: 8vh;
-        opacity: 0.7; 
-        pointer-events: none;
-    }
+  .champion-grid {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 8px;
+    height: 50vh;
+    width: 90vh;
+    max-height: 60vh;
+    overflow-y: auto;
+    align-content: start; 
+  }
+  .champion-card {
+    text-align: center;
+    font-size: 20px;
+    position: relative; 
+    cursor: pointer;
+    transition: opacity 0.3s;
+  }
+  .champion-card.disabled {
+    opacity: 0.4;
+    pointer-events: none;
+  }
+  .champion-icon {
+    width: auto;
+    height: 8vh;
+    object-fit: contain;
+  }
+  .champion-icon.selected {
+    border: 2px solid white;
+    box-sizing: border-box;
+  }
+  .confirmbtn-container{
+    display: flex;
+    justify-content: center;
+  }
+  .confirm{
+    margin-top: 5px;
+    width: 200px;
+    height: 50px;
+    font-size: 30px;
+    z-index: 2;
+  }
+  .banned-overlay {
+    position: absolute;
+    top: 0;
+    left: 1.2vh;
+    width: auto;
+    height: 8vh;
+    opacity: 0.7; 
+    pointer-events: none;
+  }
 </style>

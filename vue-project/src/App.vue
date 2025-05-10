@@ -1,22 +1,28 @@
 <script setup>
 import { ref, watch } from 'vue';
+import { useSetindexStore } from '@/stores/Set_Index';
+import { useVersionStore } from './stores/version';
+
 import GlobalBluebans from './views/GlobalBluebans.vue';
 import GlobalRedbans from './views/GlobalRedbans.vue';
-import Bans from './views/Bans.vue';
 import List from './views/List.vue';
 import BluePlayers from './views/BluePlayers.vue';
 import RedPlayers from './views/RedPlayers.vue';
-import { useSetindexStore } from '@/stores/Set_Index';
-import generalbgm from  '@/assets/data/general.m4a';
-import silver_scraps from '@/assets/data/Silver Scrapes.m4a';
 import Red_Bans from './views/Red_Bans.vue';
 import Blue_Bans from './views/Blue_Bans.vue';
+import Timer from './views/Timer.vue'
 
-const setindex = useSetindexStore();
+import generalbgm from  '@/assets/data/general.m4a';
+import silver_scraps from '@/assets/data/Silver Scrapes.m4a';
+import Logo from '@/assets/data/LCK LOGO.png'
+
+const Set_Index_Store = useSetindexStore();
+const Version_Store = useVersionStore();
+
 const audioRef = ref(null);
 const bgm = ref(generalbgm);
 
-watch(() => setindex.setindex, (newVal) => {
+watch(() => Set_Index_Store.setindex, (newVal) => {
   if (newVal == 5) {
     audioRef.value.volume = 0.2;
     bgm.value = silver_scraps;
@@ -35,24 +41,33 @@ function handleClick() {
     });
   }
 }
+
 </script>
 
 <template>
   <main @touchstart="handleClick" @click="handleClick">
     <div class="audio-container" >
-      <audio ref="audioRef" :src="bgm" loop controls></audio>
+      <audio class="BGM" ref="audioRef" :src="bgm" loop controls></audio>
     </div>
     <div class="container">
       <GlobalBluebans/>
-      <List/>
+      <List />
       <GlobalRedbans/>
     </div>
     <div class="container">
       <Blue_Bans/>
+      <Timer />
       <Red_Bans/>
     </div>
     <div class="container">
       <BluePlayers/>
+      <div class="info">
+        <div class="version" v-if="Version_Store.version">
+          PATCH {{ Version_Store.Version_info }}
+        </div>        
+        <img :src="Logo" class = "Logo">
+      </div>
+      
       <RedPlayers/>
     </div>
   </main>
@@ -64,6 +79,11 @@ function handleClick() {
     flex-direction: column;
     justify-content: space-between;
   }
+  .BGM{
+    margin-top: 10px;
+    margin-right: 10px;
+    height: 30px;
+  }
   .audio-container{
     display: flex;
     justify-content: end;
@@ -71,5 +91,19 @@ function handleClick() {
   .container{
     display: flex;
     justify-content: space-between;
+
+  }
+  .info{
+    display: flex;
+    flex-direction: column;
+  }
+  .Logo{
+    width: auto;
+    height: 20vh;
+  }
+  .version{
+    font-size: 20px;
+    text-align: center;
+    color: white;
   }
 </style>
