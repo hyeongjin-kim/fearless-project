@@ -5,7 +5,7 @@ import { useVersionStore } from './stores/version';
 
 import GlobalBluebans from './views/GlobalBluebans.vue';
 import GlobalRedbans from './views/GlobalRedbans.vue';
-import List from './views/List.vue';
+import Main_Content from './views/Main_Content.vue';
 import BluePlayers from './views/BluePlayers.vue';
 import RedPlayers from './views/RedPlayers.vue';
 import Red_Bans from './views/Red_Bans.vue';
@@ -51,7 +51,7 @@ function handleClick() {
     </div>
     <div class="container">
       <GlobalBluebans/>
-      <List />
+      <Main_Content />
       <GlobalRedbans/>
     </div>
     <div class="container">
