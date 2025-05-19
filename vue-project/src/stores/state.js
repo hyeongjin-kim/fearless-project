@@ -3,6 +3,7 @@ import { defineStore } from "pinia";
 
 export const UseStateStore = defineStore('state', ()=>{
     const statelist = ref([
+        {phase: "Ready", turn: "Blue", index: 0},
         {phase: "Ban", turn: "Blue", index: 4},
         {phase: "Ban", turn: "Red", index: 0},
         {phase: "Ban", turn: "Blue", index: 3},

@@ -42,13 +42,17 @@ const Reset_Search_Bar = ref(false);
 onMounted(async () => {
   if(!Version_Store.version) await Version_Store.Get_version();
   await Get_nickname();
-  Timer_Store.startTimer();
 });
 
 async function Get_nickname(){
   const res = await fetch(`/nicknames.json`);
   const data = await res.json();
   Nickname_Map.value = data;
+}
+
+function Gamestart(){
+  Timer_Store.startTimer();
+  State_Store.next_state();
 }
 
 function GameConfirm(){
@@ -170,6 +174,7 @@ function normalize(str) {
     <div v-if="State_Store.state.phase == 'Done'" class="swap-anouncement">포지션에 맞게 스왑해주세요.</div>
 
     <div class="game-end-btn-container">
+      <button v-if="State_Store.state.phase == 'Ready'" class="btn" @click="Gamestart()">게임 시작</button>
       <button v-if="State_Store.state.phase == 'Done' && Set_Index_Store.setindex < 5" class="btn" @click="GameConfirm()">{{Set_Index_Store.setindex}}세트 종료</button>
       <button v-if="State_Store.state.phase == 'Done' && Set_Index_Store.setindex < 5" class="btn" @click="Swap()">진영 변경</button>
       <button v-if="State_Store.state.phase == 'Done' && Set_Index_Store.setindex == 5" class="btn" @click="cleargame()">경기 종료</button>
