@@ -47,7 +47,7 @@ function handleClick() {
 <template>
   <main @touchstart="handleClick" @click="handleClick">
     <div class="audio-container" >
-      <audio class="BGM" ref="audioRef" :src="bgm" loop controls></audio>
+      <audio class="BGM" ref="audioRef" :src="bgm" volume = "0.2" loop controls></audio>
     </div>
     <div class="container">
       <GlobalBluebans/>
@@ -98,8 +98,8 @@ function handleClick() {
     flex-direction: column;
   }
   .Logo{
-    width: auto;
-    height: 20vh;
+    width: 12vw;
+    height: auto;
   }
   .version{
     font-size: 20px;

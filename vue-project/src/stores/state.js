@@ -35,6 +35,7 @@ export const UseStateStore = defineStore('state', ()=>{
     function next_state(){
         stateindex.value = stateindex.value + 1;
         state.value = statelist.value[stateindex.value];
+        return state.value.phase;
     }
     function reset(){
         stateindex.value = 0;

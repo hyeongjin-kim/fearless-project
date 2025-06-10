@@ -2,11 +2,11 @@ import { ref } from 'vue'
 import { defineStore } from 'pinia'
 
 export const UseTimerStore = defineStore('Timer', ()=>{
-    const timer = ref(50);
+    const timer = ref(1000);
     const isTiming = ref(false);
     let timerInterval = null;
 
-    function startTimer(duration = 50) {
+    function startTimer(duration = 1000) {
         clearTimer();
         timer.value = duration;
         isTiming.value = true;
@@ -25,6 +25,7 @@ export const UseTimerStore = defineStore('Timer', ()=>{
             clearInterval(timerInterval);
             timerInterval = null;
         }
+        timer.value = 1000;
         isTiming.value = false;
     }
 

@@ -34,7 +34,7 @@ const Line_Champions = ref({"top" : [], "jug":[] , "mid":[], "bot": [], "sup": [
 async function Get_line_Champion() {
   const line = ["top", "jug", "mid", "bot", "sup"];
   for (let i = 0; i < 5; i++) {
-    const res = await fetch(`/${line[i]}_champions.json`);
+    const res = await fetch(`${line[i]}_champions.json`);
     const data = await res.json();
 
     Line_Champions.value[line[i]] = data.sort(

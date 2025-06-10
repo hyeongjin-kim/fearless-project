@@ -45,7 +45,7 @@ onMounted(async () => {
 });
 
 async function Get_nickname(){
-  const res = await fetch(`/nicknames.json`);
+  const res = await fetch(`nicknames.json`);
   const data = await res.json();
   Nickname_Map.value = data;
 }
@@ -64,7 +64,6 @@ function GameConfirm(){
   Red_Ban_Store.reset();
   Blue_Pick_Store.reset();
   Red_Pick_Store.reset();
-  Timer_Store.startTimer();
 }
 
 function Swap(){
@@ -90,6 +89,7 @@ function cleargame(){
   Red_Ban_Store.reset();
   Blue_Pick_Store.reset();
   Red_Pick_Store.reset();
+  Timer_Store.timeExpired();
 }
 
 function isDisabled(championId) {
@@ -127,8 +127,11 @@ function select_confirm(choice){
       return;
     }
   }
-  State_Store.next_state();
-  if(State_Store.state.phase != 'Done') Timer_Store.startTimer();
+  const phase = State_Store.next_state();
+
+  if (phase !== 'Done' && phase !== 'Ready') {
+    Timer_Store.startTimer();
+  }
   else Timer_Store.timeExpired();
 }
 

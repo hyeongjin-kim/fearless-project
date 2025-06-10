@@ -46,13 +46,13 @@
 <style scoped>
   .Red_Player{
     display: flex;
-    width: auto;
-    height: 25vh;
+    width: 40vw;
+    height: auto;
     flex-wrap: nowrap;
   }
   .championiller{
-    width: auto;
-    height: 25vh;
+    width: 8vw;
+    height: auto;
     box-sizing: border-box;
   }
   .championiller.active{
