@@ -9,9 +9,10 @@ import { useGlobalBluebanStore } from '@/stores/Blue_Global_Ban';
 import { useGlobalRedbanStore } from '@/stores/Red_Global_Ban';
 
 import { useSetindexStore } from '@/stores/Set_Index';
-import { UseStateStore } from '@/stores/State';
+import { useStateStore } from '@/stores/State';
 import { useVersionStore } from '@/stores/version.js';
-import { UseTimerStore } from '@/stores/Timer';
+import { useTimerStore } from '@/stores/Timer';
+import { useClientSocketStore } from '@/stores/Client_Socket';
 
 import Line_Filter from './Line_Filter.vue';
 import SearchBar from './SearchBar.vue'
@@ -33,8 +34,8 @@ const Red_Global_Ban_Store = useGlobalRedbanStore();
 const Blue_Global_Ban_Store = useGlobalBluebanStore();
 
 const Set_Index_Store = useSetindexStore();
-const State_Store = UseStateStore();
-const Timer_Store = UseTimerStore();
+const State_Store = useStateStore();
+const Timer_Store = useTimerStore();
 
 const Nickname_Map = ref({});
 const Reset_Search_Bar = ref(false);
@@ -51,6 +52,12 @@ async function Get_nickname(){
 }
 
 function Gamestart(){
+  // 여기서 시작 버튼 눌렀다는 정보를 서버에게 전송
+  // 시작을 방장만 누를 수 있게 하는 기능이 필요함
+  socket.emit('is_started', true);
+
+  // 시작버튼 눌렸다는 정보를 서버에서 받아온 뒤 타이머가 일괄적으로 시작되게끔 해야
+  // 클라이언트 간 시간차를 줄일 수 있을듯..?
   Timer_Store.startTimer();
   State_Store.next_state();
 }

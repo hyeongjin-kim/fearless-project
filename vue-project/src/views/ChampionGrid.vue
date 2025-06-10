@@ -5,10 +5,10 @@ import { useGlobalBluebanStore } from '@/stores/Blue_Global_Ban';
 import { useGlobalRedbanStore } from '@/stores/Red_Global_Ban';
 import { useBluebanStore } from '@/stores/Blue_Ban';
 import { useRedbanStore } from '@/stores/Red_Ban';
-import { UseStateStore } from '@/stores/State';
+import { useStateStore } from '@/stores/State';
 import { useBluepickStore } from '@/stores/Blue_Pick';
 import { useRedpickStore } from '@/stores/Red_Pick';
-import { UseTimerStore } from '@/stores/Timer';
+import { useTimerStore } from '@/stores/Timer';
 
 const Red_Ban_Store = useRedbanStore();
 const Red_Global_Ban_Store = useGlobalRedbanStore();
@@ -20,8 +20,8 @@ const Blue_Pick_Store = useBluepickStore();
 
 const Version_Store = useVersionStore();
 
-const State_Store = UseStateStore();
-const Timer_Store = UseTimerStore();
+const State_Store = useStateStore();
+const Timer_Store = useTimerStore();
 
 const props = defineProps(
     ['championListProp']

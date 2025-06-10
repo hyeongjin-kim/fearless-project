@@ -1,5 +1,5 @@
 <script setup>
-  import {useVersionStore} from '@/stores/version.js'
+  import { useVersionStore } from '@/stores/version.js'
   import { useGlobalRedbanStore } from '@/stores/Red_Global_Ban';
   import default_img from '@/assets/data/unknown.jpg';
   const version = useVersionStore();

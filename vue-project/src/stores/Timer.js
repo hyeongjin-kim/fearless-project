@@ -1,7 +1,7 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
 
-export const UseTimerStore = defineStore('Timer', ()=>{
+export const useTimerStore = defineStore('Timer', ()=>{
     const timer = ref(1000);
     const isTiming = ref(false);
     let timerInterval = null;

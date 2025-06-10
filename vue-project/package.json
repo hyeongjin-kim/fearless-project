@@ -9,7 +9,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "express": "^4.21.2",
     "pinia": "^3.0.1",
+    "socket.io": "^4.8.1",
+    "socket.io-client": "^4.8.1",
     "vue": "^3.5.13",
     "vue-router": "^4.5.0"
   },

@@ -1,7 +1,7 @@
 import { ref } from "vue";
 import { defineStore } from "pinia";
 
-export const UseStateStore = defineStore('state', ()=>{
+export const useStateStore = defineStore('state', ()=>{
     const statelist = ref([
         {phase: "Ready", turn: "Blue", index: 0},
         {phase: "Ban", turn: "Blue", index: 4},

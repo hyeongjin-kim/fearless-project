@@ -1,9 +1,9 @@
 <script setup>
-import { UseStateStore } from '@/stores/State'
-import { UseTimerStore } from '@/stores/Timer';
+import { useStateStore } from '@/stores/State'
+import { useTimerStore } from '@/stores/Timer';
 
-const StateStore = UseStateStore();
-const TimerStore = UseTimerStore();
+const StateStore = useStateStore();
+const TimerStore = useTimerStore();
 
 </script>
 

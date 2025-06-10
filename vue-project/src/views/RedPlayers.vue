@@ -6,10 +6,10 @@
   import midimg from '@/assets/data/mid.png'
   import botimg from '@/assets/data/bot.png'
   import supimg from '@/assets/data/sup.png'
-  import { UseStateStore } from '@/stores/State';
+  import { useStateStore } from '@/stores/State';
   const imglist = [topimg, jugimg, midimg, botimg, supimg];
   const Red_Pick_Store = useRedpickStore();
-  const State_Store = UseStateStore();
+  const State_Store = useStateStore();
   let players_to_swap = ref([]);
   
   function is_active(index){

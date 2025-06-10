@@ -2,12 +2,12 @@
   import { useSetindexStore } from '@/stores/Set_Index';
   import { useVersionStore } from '@/stores/version.js'
   import { useRedbanStore } from '@/stores/Red_Ban';
-  import { UseStateStore } from '@/stores/State';
+  import { useStateStore } from '@/stores/State';
   import default_img from '@/assets/data/unknown.jpg';
   const Set_Index_Store = useSetindexStore();
   const Version_Store = useVersionStore();
   const Red_Ban_Store = useRedbanStore();
-  const State_Store = UseStateStore();
+  const State_Store = useStateStore();
 
   function is_active(index){
     let state = State_Store.state;

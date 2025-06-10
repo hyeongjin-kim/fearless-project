@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useVersionStore } from '@/stores/version.js';
-import { UseStateStore } from '@/stores/State';
+import { useStateStore } from '@/stores/State';
 
 onMounted(async () => {
   await Get_line_Champion();
@@ -12,7 +12,7 @@ onMounted(async () => {
 const All_Champions = ref([]);
 const Current_Champion_List = ref([]);
 const Version_Store = useVersionStore();
-const State_Store = UseStateStore();
+const State_Store = useStateStore();
 
 async function Get_Champion(){
   if(!Version_Store.version) return;

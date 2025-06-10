@@ -1,6 +1,6 @@
 <script setup>
   import { useBluepickStore } from '@/stores/Blue_Pick';
-  import { UseStateStore } from '@/stores/State';
+  import { useStateStore } from '@/stores/State';
   
   import { ref } from 'vue';
   import topimg from '@/assets/data/top.png'
@@ -12,7 +12,7 @@
   const imglist = [supimg, botimg, midimg, jugimg, topimg];
   
   const Blue_Pick_Store = useBluepickStore();
-  const State_Store = UseStateStore();
+  const State_Store = useStateStore();
 
   let players_to_swap = ref([]);
 
