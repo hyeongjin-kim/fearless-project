@@ -21,13 +21,12 @@
       <div style="color : white">Game {{Set_Index_Store.setindex}} </div>
         <div class="bluebans">
           <div v-for="(ban, index) in Blue_Ban_Store.Blueban" :key="index" :class="['banned_champion', {active: is_activate(index)}]">
-          <img  :src= "ban?`https://ddragon.leagueoflegends.com/cdn/${Version_Store.version}/img/champion/${ban}.png`:default_img"/>
+          <img class="" :src= "ban?`https://ddragon.leagueoflegends.com/cdn/${Version_Store.version}/img/champion/${ban}.png`:default_img"/>
           <img src="@/assets/data/banned_overlay.png" class="banned-overlay"/>
         </div>
       </div>
     </div>
 </template>
-
 
 <style scoped>
   .blue-bancontainer {

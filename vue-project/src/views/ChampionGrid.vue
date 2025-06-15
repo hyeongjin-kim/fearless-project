@@ -9,6 +9,8 @@ import { useStateStore } from '@/stores/State';
 import { useBluepickStore } from '@/stores/Blue_Pick';
 import { useRedpickStore } from '@/stores/Red_Pick';
 import { useTimerStore } from '@/stores/Timer';
+import { usePlayersStore } from '@/stores/Players';
+import { useClientSocketStore } from '@/stores/Client_Socket';
 
 const Red_Ban_Store = useRedbanStore();
 const Red_Global_Ban_Store = useGlobalRedbanStore();
@@ -23,6 +25,8 @@ const Version_Store = useVersionStore();
 const State_Store = useStateStore();
 const Timer_Store = useTimerStore();
 
+const Player_store = usePlayersStore();
+const Socket_Store = useClientSocketStore();
 const props = defineProps(
     ['championListProp']
 )
@@ -33,24 +37,9 @@ function isselected(id){
 
 const Selected_Champion = ref("");
 
-function choose(id){
+function choose(id) {
   Selected_Champion.value = id;
-  if(State_Store.state.phase == "Ban"){
-    if(State_Store.state.turn == "Blue"){
-       Blue_Ban_Store.set_ban(id, State_Store.state.index);
-    }
-    else if(State_Store.state.turn == "Red"){
-       Red_Ban_Store.set_ban(id, State_Store.state.index);
-    }
-  }
-  else if(State_Store.state.phase == "Pick"){
-    if(State_Store.state.turn == "Blue"){
-       Blue_Pick_Store.set_pick(id, State_Store.state.index)
-    }
-    else if(State_Store.state.turn == "Red"){
-       Red_Pick_Store.set_pick(id, State_Store.state.index)
-    }
-  }
+  Socket_Store.emit("choose", {champion_name: id});
 }
 
 function isDisabled(championId) {
@@ -78,6 +67,11 @@ function Confirm(){
   Selected_Champion.value = "";
 }
 
+function index_conversion(team, index){
+  if(team == 'Blue') return 5 - index;
+  if(team == 'Red') return index + 1;
+}
+
 </script>
 
 <template>
@@ -103,8 +97,12 @@ function Confirm(){
       </div>
     </div>
     <div class="confirmbtn-container">
-      <button v-if="State_Store.state.phase == 'Pick'" class="confirm" @click="Confirm()">챔피언 선택</button>
-      <button v-if="State_Store.state.phase == 'Ban'" class="confirm" @click="Confirm()">챔피언 금지</button>
+      <button v-if=" State_Store.state.phase == 'Pick'
+      && Player_store.get_player_info()[`${State_Store.state.turn.toLocaleLowerCase()}_player_${index_conversion(State_Store.state.turn, State_Store.state.index)}`].socket_id === Socket_Store.get_socket_id()
+      " class="confirm" @click="Confirm()">챔피언 선택</button>
+      <button v-if=" State_Store.state.phase == 'Ban' 
+      && Player_store.get_player_info()[`${State_Store.state.turn.toLocaleLowerCase()}_player_1`].socket_id === Socket_Store.get_socket_id()"
+       class="confirm" @click="Confirm() ">챔피언 금지</button>
     </div>
   </main>
 </template>
@@ -146,8 +144,8 @@ function Confirm(){
   }
   .confirm{
     margin-top: 5px;
-    width: 200px;
-    height: 50px;
+    width: 20vh;
+    height: 5vh;
     font-size: 30px;
     z-index: 2;
   }

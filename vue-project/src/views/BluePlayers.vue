@@ -1,6 +1,7 @@
 <script setup>
   import { useBluepickStore } from '@/stores/Blue_Pick';
   import { useStateStore } from '@/stores/State';
+  import { usePlayersStore } from '@/stores/Players';
   
   import { ref } from 'vue';
   import topimg from '@/assets/data/top.png'
@@ -13,6 +14,7 @@
   
   const Blue_Pick_Store = useBluepickStore();
   const State_Store = useStateStore();
+  const Player_store = usePlayersStore();
 
   let players_to_swap = ref([]);
 
@@ -41,12 +43,30 @@
   }
 </script>
 
-<template>
+<!-- TODO: 닉네임 써주기 -->
+<!-- <template>
   <div class="Blue_Player">
     <img v-for="(pick, index) in Blue_Pick_Store.Bluepick" :key="index"
     :class="['championiller', {active: is_active(index) || isselected(index) }]"
     :src=" pick?`https://ddragon.leagueoflegends.com/cdn/img/champion/loading/${pick}_0.jpg`:imglist[index]"
      alt="" @click="swap(index)">
+  </div>
+</template> -->
+<template>
+  <div class="Blue_Player">
+    <div v-for="(pick, index) in Blue_Pick_Store.Bluepick" :key="index" class="champion-container">
+      <div class="champion-img-wrapper">
+        <img
+          :class="['championiller', {active: is_active(index) || isselected(index) }]"
+          :src="pick ? `https://ddragon.leagueoflegends.com/cdn/img/champion/loading/${pick}_0.jpg` : imglist[index]"
+          alt=""
+          @click="swap(index)"
+        >
+        <div class="nickname-overlay">
+          {{ Player_store.get_player_info()[`blue_player_${5 - index}`]?.nickname || '' }}
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -57,15 +77,52 @@
     height: auto;
     flex-wrap: nowrap;
   }
+  .champion-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 8vw;
+  }
+  .champion-img-wrapper {
+    position: relative;
+    width: 8vw;
+    height: auto;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+  }
   .championiller{
     box-sizing: border-box;
     width: 8vw;
     height: auto;
+    object-fit: cover;
   }
   .championiller.active{
-    border-color: red;
+    border: 3px solid #fff;
+    box-shadow: 0 0 16px 4px #00bfff, 0 0 8px 2px #000 inset;
     animation: blink 2s infinite;
     z-index: 2;
+  }
+  .nickname-overlay {
+    position: absolute;
+    bottom: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    color: #fff;
+    font-weight: bold;
+    font-size: 0.8em;
+    text-align: center;
+    text-shadow:
+      0 0 8px #000,
+      0 0 4px #000,
+      0 2px 8px #00bfff;
+    padding: 2px 6px;
+    border-radius: 6px;
+    background: rgba(0,0,0,0.25);
+    pointer-events: none;
+    z-index: 3;
+    letter-spacing: 0.5px;
   }
   @keyframes blink {
     0%, 100% { box-shadow: 0 0 0px red; }

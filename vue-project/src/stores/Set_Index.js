@@ -8,6 +8,7 @@ export const useSetindexStore = defineStore('SetIndex', () => {
   }
   function reset(){
     setindex.value = 1;
+    console.log(`DEBUG - set index after reset: ${setindex.value}`)
   }
   return {setindex, increase_setindex, reset}
 })

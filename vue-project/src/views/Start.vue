@@ -2,19 +2,18 @@
 import router from "@/router";
 import { ref, onMounted } from "vue";
 import { useClientSocketStore } from "@/stores/Client_Socket";
+import { usePlayersStore } from "@/stores/Players";
 
-const socketStore = useClientSocketStore();
+const Socket_Store = useClientSocketStore();
 const nickname = ref("");
-
-onMounted(() => {
-    socketStore.connectSocket();
-});
+const Player_store = usePlayersStore();
 
 function start() {
+    Socket_Store.connectSocket(); //페이지 로딩시가 아니라 닉네임을 입력하면 그때 연결하는게 맞는 거 같음
     if (nickname.value.trim()) {
-        socketStore.emit("set_nickname", { nickname: nickname.value });
+        Socket_Store.emit("set_nickname", { nickname: nickname.value });
+        router.push("Lobby");
     }
-    router.push("Lobby");
 }
 </script>
 

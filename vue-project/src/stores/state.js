@@ -28,11 +28,12 @@ export const useStateStore = defineStore('state', ()=>{
         {phase: "Pick", turn: "Blue", index: 0},
         {phase: "Pick", turn: "Red", index: 4},
         {phase: "Done", turn: "None", index: -1},
-       ]);
+    ]);
     const stateindex = ref(0);
     const state = ref(statelist.value[stateindex.value]);
 
     function next_state(){
+        console.log(stateindex.value)
         stateindex.value = stateindex.value + 1;
         state.value = statelist.value[stateindex.value];
         return state.value.phase;

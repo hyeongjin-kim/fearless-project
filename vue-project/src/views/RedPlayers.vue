@@ -34,6 +34,7 @@
   }
 </script>
 
+TODO: 닉네임 써주기
 <template>
   <div class="Red_Player">
     <img v-for="(pick, index) in Red_Pick_Store.Redpick" :key="index"
