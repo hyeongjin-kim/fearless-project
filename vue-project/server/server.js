@@ -38,7 +38,7 @@ const STATE = [
 const server = createServer();
 const io = new Server(server, {
     cors: {
-        origin: `http://${address}:${page_port}`,
+        origin: `http://${address}`,
         methods: ["GET", "POST"],
     },
     maxConnections: MAX_CONNECTIONS,

@@ -25,7 +25,7 @@ function is_activate(index) {
                 :key="index"
                 :class="['banned_champion', { active: is_activate(index) }]"
             >
-                <img
+                <img 
                     class=""
                     :src="
                         ban
