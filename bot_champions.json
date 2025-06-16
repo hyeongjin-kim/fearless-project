@@ -1,0 +1,106 @@
+[
+  {
+    "id": "Nilah",
+    "name": "닐라"
+  },
+  {
+    "id": "Draven",
+    "name": "드레이븐"
+  },
+  {
+    "id": "Lucian",
+    "name": "루시안"
+  },
+  {
+    "id": "MissFortune",
+    "name": "미스 포츈"
+  },
+  {
+    "id": "Varus",
+    "name": "바루스"
+  },
+  {
+    "id": "Vayne",
+    "name": "베인"
+  },
+  {
+    "id": "Samira",
+    "name": "사미라"
+  },
+  {
+    "id": "Senna",
+    "name": "세나"
+  },
+  {
+    "id": "Smolder",
+    "name": "스몰더"
+  },
+  {
+    "id": "Swain",
+    "name": "스웨인"
+  },
+  {
+    "id": "Sivir",
+    "name": "시비르"
+  },
+  {
+    "id": "Aphelios",
+    "name": "아펠리오스"
+  },
+  {
+    "id": "Ashe",
+    "name": "애쉬"
+  },
+  {
+    "id": "Ezreal",
+    "name": "이즈리얼"
+  },
+  {
+    "id": "Xayah",
+    "name": "자야"
+  },
+  {
+    "id": "Zeri",
+    "name": "제리"
+  },
+  {
+    "id": "Ziggs",
+    "name": "직스"
+  },
+  {
+    "id": "Jhin",
+    "name": "진"
+  },
+  {
+    "id": "Jinx",
+    "name": "징크스"
+  },
+  {
+    "id": "Kaisa",
+    "name": "카이사"
+  },
+  {
+    "id": "Kalista",
+    "name": "칼리스타"
+  },
+  {
+    "id": "Caitlyn",
+    "name": "케이틀린"
+  },
+  {
+    "id": "KogMaw",
+    "name": "코그모"
+  },
+  {
+    "id": "Corki",
+    "name": "코르키"
+  },
+  {
+    "id": "Tristana",
+    "name": "트리스타나"
+  },
+  {
+    "id": "Twitch",
+    "name": "트위치"
+  }
+]

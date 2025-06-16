@@ -1,0 +1,186 @@
+[
+  {
+    "id": "Galio",
+    "name": "갈리오"
+  },
+  {
+    "id": "Gragas",
+    "name": "그라가스"
+  },
+  {
+    "id": "Nami",
+    "name": "나미"
+  },
+  {
+    "id": "Nautilus",
+    "name": "노틸러스"
+  },
+  {
+    "id": "Neeko",
+    "name": "니코"
+  },
+  {
+    "id": "Rakan",
+    "name": "라칸"
+  },
+  {
+    "id": "Lux",
+    "name": "럭스"
+  },
+  {
+    "id": "Renata",
+    "name": "레나타 글라스크"
+  },
+  {
+    "id": "Leona",
+    "name": "레오나"
+  },
+  {
+    "id": "Rell",
+    "name": "렐"
+  },
+  {
+    "id": "Lulu",
+    "name": "룰루"
+  },
+  {
+    "id": "Maokai",
+    "name": "마오카이"
+  },
+  {
+    "id": "Mel",
+    "name": "멜"
+  },
+  {
+    "id": "Morgana",
+    "name": "모르가나"
+  },
+  {
+    "id": "Milio",
+    "name": "밀리오"
+  },
+  {
+    "id": "Bard",
+    "name": "바드"
+  },
+  {
+    "id": "Veigar",
+    "name": "베이가"
+  },
+  {
+    "id": "Velkoz",
+    "name": "벨코즈"
+  },
+  {
+    "id": "Braum",
+    "name": "브라움"
+  },
+  {
+    "id": "Brand",
+    "name": "브랜드"
+  },
+  {
+    "id": "Blitzcrank",
+    "name": "블리츠크랭크"
+  },
+  {
+    "id": "Poppy",
+    "name": "뽀삐"
+  },
+  {
+    "id": "Shaco",
+    "name": "샤코"
+  },
+  {
+    "id": "Senna",
+    "name": "세나"
+  },
+  {
+    "id": "Seraphine",
+    "name": "세라핀"
+  },
+  {
+    "id": "Sona",
+    "name": "소나"
+  },
+  {
+    "id": "Soraka",
+    "name": "소라카"
+  },
+  {
+    "id": "Shen",
+    "name": "쉔"
+  },
+  {
+    "id": "Swain",
+    "name": "스웨인"
+  },
+  {
+    "id": "Thresh",
+    "name": "쓰레쉬"
+  },
+  {
+    "id": "Ivern",
+    "name": "아이번"
+  },
+  {
+    "id": "Alistar",
+    "name": "알리스타"
+  },
+  {
+    "id": "Annie",
+    "name": "애니"
+  },
+  {
+    "id": "Elise",
+    "name": "엘리스"
+  },
+  {
+    "id": "Yuumi",
+    "name": "유미"
+  },
+  {
+    "id": "Zyra",
+    "name": "자이라"
+  },
+  {
+    "id": "Janna",
+    "name": "잔나"
+  },
+  {
+    "id": "Xerath",
+    "name": "제라스"
+  },
+  {
+    "id": "Zilean",
+    "name": "질리언"
+  },
+  {
+    "id": "Karma",
+    "name": "카르마"
+  },
+  {
+    "id": "Taric",
+    "name": "타릭"
+  },
+  {
+    "id": "TahmKench",
+    "name": "탐 켄치"
+  },
+  {
+    "id": "Pyke",
+    "name": "파이크"
+  },
+  {
+    "id": "Pantheon",
+    "name": "판테온"
+  },
+  {
+    "id": "Heimerdinger",
+    "name": "하이머딩거"
+  },
+  {
+    "id": "Hwei",
+    "name": "흐웨이"
+  }
+]

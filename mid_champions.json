@@ -1,0 +1,194 @@
+[
+  {
+    "id": "Galio",
+    "name": "갈리오"
+  },
+  {
+    "id": "Nunu",
+    "name": "누누와 윌럼프"
+  },
+  {
+    "id": "Neeko",
+    "name": "니코"
+  },
+  {
+    "id": "Diana",
+    "name": "다이애나"
+  },
+  {
+    "id": "Ryze",
+    "name": "라이즈"
+  },
+  {
+    "id": "Lux",
+    "name": "럭스"
+  },
+  {
+    "id": "Leblanc",
+    "name": "르블랑"
+  },
+  {
+    "id": "Lissandra",
+    "name": "리산드라"
+  },
+  {
+    "id": "Malzahar",
+    "name": "말자하"
+  },
+  {
+    "id": "Mel",
+    "name": "멜"
+  },
+  {
+    "id": "Veigar",
+    "name": "베이가"
+  },
+  {
+    "id": "Vex",
+    "name": "벡스"
+  },
+  {
+    "id": "Velkoz",
+    "name": "벨코즈"
+  },
+  {
+    "id": "Vladimir",
+    "name": "블라디미르"
+  },
+  {
+    "id": "Viktor",
+    "name": "빅토르"
+  },
+  {
+    "id": "Sylas",
+    "name": "사일러스"
+  },
+  {
+    "id": "Seraphine",
+    "name": "세라핀"
+  },
+  {
+    "id": "Swain",
+    "name": "스웨인"
+  },
+  {
+    "id": "Syndra",
+    "name": "신드라"
+  },
+  {
+    "id": "Ahri",
+    "name": "아리"
+  },
+  {
+    "id": "AurelionSol",
+    "name": "아우렐리온 솔"
+  },
+  {
+    "id": "Azir",
+    "name": "아지르"
+  },
+  {
+    "id": "Akali",
+    "name": "아칼리"
+  },
+  {
+    "id": "Akshan",
+    "name": "아크샨"
+  },
+  {
+    "id": "Annie",
+    "name": "애니"
+  },
+  {
+    "id": "Anivia",
+    "name": "애니비아"
+  },
+  {
+    "id": "Yasuo",
+    "name": "야스오"
+  },
+  {
+    "id": "Ekko",
+    "name": "에코"
+  },
+  {
+    "id": "Aurora",
+    "name": "오로라"
+  },
+  {
+    "id": "Orianna",
+    "name": "오리아나"
+  },
+  {
+    "id": "Yone",
+    "name": "요네"
+  },
+  {
+    "id": "Irelia",
+    "name": "이렐리아"
+  },
+  {
+    "id": "Zed",
+    "name": "제드"
+  },
+  {
+    "id": "Xerath",
+    "name": "제라스"
+  },
+  {
+    "id": "Zoe",
+    "name": "조이"
+  },
+  {
+    "id": "Ziggs",
+    "name": "직스"
+  },
+  {
+    "id": "Karma",
+    "name": "카르마"
+  },
+  {
+    "id": "Kassadin",
+    "name": "카사딘"
+  },
+  {
+    "id": "Cassiopeia",
+    "name": "카시오페아"
+  },
+  {
+    "id": "Katarina",
+    "name": "카타리나"
+  },
+  {
+    "id": "Corki",
+    "name": "코르키"
+  },
+  {
+    "id": "Qiyana",
+    "name": "키아나"
+  },
+  {
+    "id": "Talon",
+    "name": "탈론"
+  },
+  {
+    "id": "Taliyah",
+    "name": "탈리야"
+  },
+  {
+    "id": "Tristana",
+    "name": "트리스타나"
+  },
+  {
+    "id": "TwistedFate",
+    "name": "트위스티드 페이트"
+  },
+  {
+    "id": "Fizz",
+    "name": "피즈"
+  },
+  {
+    "id": "Hwei",
+    "name": "흐웨이"
+  }
+]

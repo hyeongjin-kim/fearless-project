@@ -1,0 +1,214 @@
+[
+  {
+    "id": "Gragas",
+    "name": "그라가스"
+  },
+  {
+    "id": "Graves",
+    "name": "그레이브즈"
+  },
+  {
+    "id": "Gwen",
+    "name": "그웬"
+  },
+  {
+    "id": "Naafiri",
+    "name": "나피리"
+  },
+  {
+    "id": "Nocturne",
+    "name": "녹턴"
+  },
+  {
+    "id": "Nunu",
+    "name": "누누와 윌럼프"
+  },
+  {
+    "id": "Nidalee",
+    "name": "니달리"
+  },
+  {
+    "id": "Diana",
+    "name": "다이애나"
+  },
+  {
+    "id": "Rammus",
+    "name": "람머스"
+  },
+  {
+    "id": "RekSai",
+    "name": "렉사이"
+  },
+  {
+    "id": "Rengar",
+    "name": "렝가"
+  },
+  {
+    "id": "LeeSin",
+    "name": "리 신"
+  },
+  {
+    "id": "Lillia",
+    "name": "릴리아"
+  },
+  {
+    "id": "MasterYi",
+    "name": "마스터 이"
+  },
+  {
+    "id": "Maokai",
+    "name": "마오카이"
+  },
+  {
+    "id": "Morgana",
+    "name": "모르가나"
+  },
+  {
+    "id": "Vi",
+    "name": "바이"
+  },
+  {
+    "id": "Belveth",
+    "name": "벨베스"
+  },
+  {
+    "id": "Briar",
+    "name": "브라이어"
+  },
+  {
+    "id": "Brand",
+    "name": "브랜드"
+  },
+  {
+    "id": "Viego",
+    "name": "비에고"
+  },
+  {
+    "id": "Poppy",
+    "name": "뽀삐"
+  },
+  {
+    "id": "Shaco",
+    "name": "샤코"
+  },
+  {
+    "id": "Sejuani",
+    "name": "세주아니"
+  },
+  {
+    "id": "Shyvana",
+    "name": "쉬바나"
+  },
+  {
+    "id": "Skarner",
+    "name": "스카너"
+  },
+  {
+    "id": "XinZhao",
+    "name": "신 짜오"
+  },
+  {
+    "id": "Amumu",
+    "name": "아무무"
+  },
+  {
+    "id": "Ivern",
+    "name": "아이번"
+  },
+  {
+    "id": "Ekko",
+    "name": "에코"
+  },
+  {
+    "id": "Elise",
+    "name": "엘리스"
+  },
+  {
+    "id": "MonkeyKing",
+    "name": "오공"
+  },
+  {
+    "id": "Olaf",
+    "name": "올라프"
+  },
+  {
+    "id": "Yorick",
+    "name": "요릭"
+  },
+  {
+    "id": "Udyr",
+    "name": "우디르"
+  },
+  {
+    "id": "Warwick",
+    "name": "워윅"
+  },
+  {
+    "id": "Evelynn",
+    "name": "이블린"
+  },
+  {
+    "id": "JarvanIV",
+    "name": "자르반 4세"
+  },
+  {
+    "id": "Zyra",
+    "name": "자이라"
+  },
+  {
+    "id": "Zac",
+    "name": "자크"
+  },
+  {
+    "id": "Jax",
+    "name": "잭스"
+  },
+  {
+    "id": "Zed",
+    "name": "제드"
+  },
+  {
+    "id": "Karthus",
+    "name": "카서스"
+  },
+  {
+    "id": "Khazix",
+    "name": "카직스"
+  },
+  {
+    "id": "Kayn",
+    "name": "케인"
+  },
+  {
+    "id": "Qiyana",
+    "name": "키아나"
+  },
+  {
+    "id": "Kindred",
+    "name": "킨드레드"
+  },
+  {
+    "id": "Talon",
+    "name": "탈론"
+  },
+  {
+    "id": "Taliyah",
+    "name": "탈리야"
+  },
+  {
+    "id": "Trundle",
+    "name": "트런들"
+  },
+  {
+    "id": "Pantheon",
+    "name": "판테온"
+  },
+  {
+    "id": "Fiddlesticks",
+    "name": "피들스틱"
+  },
+  {
+    "id": "Hecarim",
+    "name": "헤카림"
+  }
+]
