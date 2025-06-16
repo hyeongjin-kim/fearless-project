@@ -1,25 +1,24 @@
 import { ref } from "vue";
 import { defineStore } from "pinia";
-import { useClientSocketStore } from "./Client_Socket";
 
-export const usePlayersStore = defineStore('players', () => {
+export const usePlayersStore = defineStore("players", () => {
     const players = ref({
-        blue_player_1: { socket_id: null, nickname: '' },
-        blue_player_2: { socket_id: null, nickname: '' },
-        blue_player_3: { socket_id: null, nickname: '' },
-        blue_player_4: { socket_id: null, nickname: '' },
-        blue_player_5: { socket_id: null, nickname: '' },
-        red_player_1: { socket_id: null, nickname: '' },
-        red_player_2: { socket_id: null, nickname: '' },
-        red_player_3: { socket_id: null, nickname: '' },
-        red_player_4: { socket_id: null, nickname: '' },
-        red_player_5: { socket_id: null, nickname: '' },
+        blue_player_1: { socket_id: null, nickname: "" },
+        blue_player_2: { socket_id: null, nickname: "" },
+        blue_player_3: { socket_id: null, nickname: "" },
+        blue_player_4: { socket_id: null, nickname: "" },
+        blue_player_5: { socket_id: null, nickname: "" },
+        red_player_1: { socket_id: null, nickname: "" },
+        red_player_2: { socket_id: null, nickname: "" },
+        red_player_3: { socket_id: null, nickname: "" },
+        red_player_4: { socket_id: null, nickname: "" },
+        red_player_5: { socket_id: null, nickname: "" },
         bench: [],
     });
-    function update_players(data){
+    function update_players(data) {
         Object.assign(players.value, data.player_info);
     }
-    function get_player_info(){
+    function get_player_info() {
         return players.value;
     }
     function is_full() {
@@ -35,5 +34,5 @@ export const usePlayersStore = defineStore('players', () => {
         return true;
     }
 
-    return {update_players, get_player_info, is_full};
-})
+    return { update_players, get_player_info, is_full };
+});

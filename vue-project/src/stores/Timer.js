@@ -1,7 +1,7 @@
-import { ref } from 'vue'
-import { defineStore } from 'pinia'
+import { ref } from "vue";
+import { defineStore } from "pinia";
 
-export const useTimerStore = defineStore('Timer', ()=>{
+export const useTimerStore = defineStore("Timer", () => {
     const timer = ref(1000);
     const isTiming = ref(false);
     let timerInterval = null;
@@ -13,9 +13,9 @@ export const useTimerStore = defineStore('Timer', ()=>{
 
         timerInterval = setInterval(() => {
             if (timer.value > 0) {
-            timer.value -= 1;
+                timer.value -= 1;
             } else {
-            timeExpired();
+                timeExpired();
             }
         }, 1000);
     }
@@ -32,5 +32,5 @@ export const useTimerStore = defineStore('Timer', ()=>{
     function timeExpired() {
         clearTimer();
     }
-    return {timer, startTimer, timeExpired};
-})
+    return { timer, startTimer, timeExpired };
+});

@@ -3,7 +3,6 @@ import { defineStore } from "pinia";
 import { io } from "socket.io-client";
 
 const address = import.meta.env.VITE_SERVER_ADDRESS;
-const page_port = import.meta.env.VITE_PAGE_PORT;
 const socket_port = import.meta.env.VITE_SOCKET_PORT;
 
 export const useClientSocketStore = defineStore("Client_Socket", () => {
@@ -17,8 +16,8 @@ export const useClientSocketStore = defineStore("Client_Socket", () => {
         }
     }
 
-    function get_socket_id(){
-        if(socket.value) return socket.value.id;
+    function get_socket_id() {
+        if (socket.value) return socket.value.id;
     }
 
     // Disconnect from the server
@@ -43,5 +42,5 @@ export const useClientSocketStore = defineStore("Client_Socket", () => {
         }
     }
 
-    return {connectSocket, get_socket_id, disconnectSocket, emit, on };
+    return { connectSocket, get_socket_id, disconnectSocket, emit, on };
 });
