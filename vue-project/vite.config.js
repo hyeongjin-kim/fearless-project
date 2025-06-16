@@ -16,4 +16,8 @@ export default defineConfig({
         host: true,
         allowedHosts: [".ngrok-free.app"],
     },
+    base: "/fearless-project/",
+    build: {
+        outDir: "dist",
+    },
 });

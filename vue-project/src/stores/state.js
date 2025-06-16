@@ -32,12 +32,6 @@ export const useStateStore = defineStore("state", () => {
     const stateindex = ref(0);
     const state = ref(statelist.value[stateindex.value]);
 
-    // deprecated
-    function next_state() {
-        stateindex.value = stateindex.value + 1;
-        state.value = statelist.value[stateindex.value];
-        return state.value.phase;
-    }
     function set_state(newIndex) {
         stateindex.value = newIndex;
         state.value = statelist.value[stateindex.value];
@@ -46,5 +40,5 @@ export const useStateStore = defineStore("state", () => {
         stateindex.value = 0;
         state.value = statelist.value[stateindex.value];
     }
-    return { state, next_state, set_state, reset };
+    return { state, set_state, reset };
 });

@@ -65,12 +65,12 @@ function sound() {
     }
 }
 
-function cleargame() {
-    Socket_Store.emit("game_reset");
+function MatchClear() {
+    Socket_Store.emit("match_reset");
 }
 
-function MatchReset() {
-    Socket_Store.emit("match_reset");
+function GameReset() {
+    Socket_Store.emit("game_reset");
 }
 </script>
 
@@ -91,11 +91,11 @@ function MatchReset() {
                     Socket_Store.get_socket_id()
                 "
             >
-                <button class="clear_btn" @click="cleargame()">
+                <button class="clear_btn" @click="MatchClear()">
                     전체 초기화
                 </button>
-                <button class="clear_btn" @click="MatchReset()">
-                    매치 초기화
+                <button class="clear_btn" @click="GameReset()">
+                    게임 초기화
                 </button>
             </div>
             <img :src="icon" @click="sound()" class="sound_icon" />

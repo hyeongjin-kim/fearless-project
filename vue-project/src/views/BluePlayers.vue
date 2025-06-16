@@ -2,6 +2,7 @@
 import { useBluepickStore } from "@/stores/Blue_Pick";
 import { useStateStore } from "@/stores/state";
 import { usePlayersStore } from "@/stores/Players";
+import { useClientSocketStore } from "@/stores/Client_Socket";
 
 import { ref } from "vue";
 import topimg from "@/assets/data/top.png";
@@ -15,7 +16,7 @@ const imglist = [supimg, botimg, midimg, jugimg, topimg];
 const Blue_Pick_Store = useBluepickStore();
 const State_Store = useStateStore();
 const Player_store = usePlayersStore();
-
+const Socket_Store = useClientSocketStore();
 let players_to_swap = ref([]);
 
 function is_active(index) {
@@ -29,34 +30,33 @@ function isselected(index) {
     return players_to_swap.value.includes(index);
 }
 
-function swap(index) {
+function line_swap(index) {
     if (State_Store.state.phase != "Done") return;
-    if (players_to_swap.value.includes(index)) players_to_swap.value = [];
-    else {
-        players_to_swap.value.push(index);
+    if (
+        Player_store.get_player_info().blue_player_1.socket_id !=
+        Socket_Store.get_socket_id()
+    )
+        return;
+    if (players_to_swap.value.includes(index)) {
+        players_to_swap.value.length = 0;
+        return;
+    }
 
-        if (players_to_swap.value.length == 2) {
-            let temp = Blue_Pick_Store.Bluepick[players_to_swap.value[0]];
-            Blue_Pick_Store.set_pick(
-                Blue_Pick_Store.Bluepick[players_to_swap.value[1]],
-                players_to_swap.value[0]
-            );
-            Blue_Pick_Store.set_pick(temp, players_to_swap.value[1]);
-            players_to_swap.value = [];
-        }
+    players_to_swap.value.push(index);
+
+    if (players_to_swap.value.length === 2) {
+        const indices = [...players_to_swap.value];
+
+        Socket_Store.emit("line_swap", {
+            team: "Blue",
+            index: indices,
+        });
+
+        players_to_swap.value.length = 0;
     }
 }
 </script>
 
-<!-- TODO: 닉네임 써주기 -->
-<!-- <template>
-  <div class="Blue_Player">
-    <img v-for="(pick, index) in Blue_Pick_Store.Bluepick" :key="index"
-    :class="['championiller', {active: is_active(index) || isselected(index) }]"
-    :src=" pick?`https://ddragon.leagueoflegends.com/cdn/img/champion/loading/${pick}_0.jpg`:imglist[index]"
-     alt="" @click="swap(index)">
-  </div>
-</template> -->
 <template>
     <div class="Blue_Player">
         <div
@@ -76,7 +76,7 @@ function swap(index) {
                             : imglist[index]
                     "
                     alt=""
-                    @click="swap(index)"
+                    @click="line_swap(index)"
                 />
                 <div class="nickname-overlay">
                     {{
@@ -118,8 +118,7 @@ function swap(index) {
     object-fit: cover;
 }
 .championiller.active {
-    border: 3px solid #fff;
-    box-shadow: 0 0 16px 4px #00bfff, 0 0 8px 2px #000 inset;
+    border-color: red;
     animation: blink 2s infinite;
     z-index: 2;
 }
@@ -133,7 +132,10 @@ function swap(index) {
     font-weight: bold;
     font-size: 0.8em;
     text-align: center;
-    text-shadow: 0 0 8px #000, 0 0 4px #000, 0 2px 8px #00bfff;
+    text-shadow:
+        0 0 8px #000,
+        0 0 4px #000,
+        0 2px 8px #00bfff;
     padding: 2px 6px;
     border-radius: 6px;
     background: rgba(0, 0, 0, 0.25);

@@ -119,7 +119,6 @@ const choose = function (champion_name) {
             game_info.red_pick[index] = champion_name;
         }
     }
-    game_info.state_idx++; // need to be fixed here (choose -> confinm)
 };
 
 io.on("connection", (socket) => {
@@ -200,31 +199,120 @@ io.on("connection", (socket) => {
         });
     });
 
-    socket.on("game_start", () => {
-        console.log("game_start");
-        io.emit("game_start");
-    });
-
-    socket.on("match_start", () => {
-        console.log("match started");
-        io.emit("match_start");
+    socket.on("get_game_info", () => {
+        console.log("Game info");
         io.emit("get_game_info", { game_info: game_info });
     });
 
+    // 처음부터 시작
+    socket.on("Start_Fearless", () => {
+        console.log("Start_Fearless");
+        io.emit("Start_Fearless");
+        io.emit("get_game_info", { game_info: game_info });
+    });
+
+    // 해당 게임 시작
+    socket.on("game_start", () => {
+        console.log(`game ${game_info.set_idx} start`);
+        game_info.state_idx++;
+        io.emit("get_game_info", { game_info: game_info });
+        io.emit("game_start");
+    });
+    //해당 게임 종료
+    socket.on("game_end", () => {
+        console.log(`game ${game_info.set_idx} end`);
+        game_info.state_idx = 0;
+        game_info.set_idx++;
+
+        // deep copy 후 global_ban에 추가
+        game_info.blue_global_ban.push([...game_info.blue_pick]);
+        game_info.red_global_ban.push([...game_info.red_pick]);
+
+        game_info.blue_ban = ["", "", "", "", ""];
+        game_info.red_ban = ["", "", "", "", ""];
+        game_info.blue_pick = ["", "", "", "", ""];
+        game_info.red_pick = ["", "", "", "", ""];
+        io.emit("get_game_info", { game_info: game_info });
+        io.emit("game_end");
+    });
+
+    // 전체 초기화
     socket.on("match_reset", () => {
         console.log("match reset");
+        game_info.state_idx = 0;
+        game_info.set_idx = 1;
+        game_info.blue_ban = ["", "", "", "", ""];
+        game_info.red_ban = ["", "", "", "", ""];
+        game_info.blue_pick = ["", "", "", "", ""];
+        game_info.red_pick = ["", "", "", "", ""];
+        game_info.blue_global_ban = [];
+        game_info.red_global_ban = [];
+        io.emit("get_game_info", { game_info: game_info });
         io.emit("match_reset");
     });
 
+    // 게임 초기화
     socket.on("game_reset", () => {
         console.log("game reset");
+        game_info.state_idx = 0;
+        game_info.blue_ban = ["", "", "", "", ""];
+        game_info.red_ban = ["", "", "", "", ""];
+        game_info.blue_pick = ["", "", "", "", ""];
+        game_info.red_pick = ["", "", "", "", ""];
+        io.emit("get_game_info", { game_info: game_info });
         io.emit("game_reset");
     });
 
+    // 진영 변경
     socket.on("swap", () => {
         console.log("swap");
+        let tempban = game_info.blue_ban.reverse();
+        game_info.blue_ban = game_info.red_ban.reverse();
+        game_info.red_ban = tempban;
 
+        // 글로벌 밴 deep swap
+        let tempglobalben = game_info.blue_global_ban.map((arr) =>
+            [...arr].reverse()
+        );
+        game_info.blue_global_ban = game_info.red_global_ban.map((arr) =>
+            [...arr].reverse()
+        );
+        game_info.red_global_ban = tempglobalben;
+
+        let temppick = game_info.blue_pick.reverse();
+        game_info.blue_pick = game_info.red_pick.reverse();
+        game_info.red_pick = temppick;
+
+        // blue_player와 red_player 정보 swap
+        for (let i = 1; i <= 5; i++) {
+            const blueKey = `blue_player_${i}`;
+            const redKey = `red_player_${i}`;
+            const temp = { ...player_info[blueKey] };
+            player_info[blueKey] = { ...player_info[redKey] };
+            player_info[redKey] = temp;
+        }
+        io.emit("player_info", {
+            player_info,
+        });
+        io.emit("get_game_info", { game_info: game_info });
         io.emit("swap");
+    });
+
+    // 라인 스왑
+    socket.on("line_swap", (line_swap_info) => {
+        console.log("line_swap");
+        if (line_swap_info.team == "Blue") {
+            let swap_temp = game_info.blue_pick[line_swap_info.index[0]];
+            game_info.blue_pick[line_swap_info.index[0]] =
+                game_info.blue_pick[line_swap_info.index[1]];
+            game_info.blue_pick[line_swap_info.index[1]] = swap_temp;
+        } else if (line_swap_info.team == "Red") {
+            let swap_temp = game_info.red_pick[line_swap_info.index[0]];
+            game_info.red_pick[line_swap_info.index[0]] =
+                game_info.red_pick[line_swap_info.index[1]];
+            game_info.red_pick[line_swap_info.index[1]] = swap_temp;
+        }
+        io.emit("get_game_info", { game_info: game_info });
     });
 
     socket.on("choose", (data) => {
@@ -232,6 +320,13 @@ io.on("connection", (socket) => {
         console.log(`game_info: ${JSON.stringify(game_info)}`);
         choose(data.champion_name);
         io.emit("get_game_info", { game_info: game_info });
+    });
+
+    socket.on("confirm", () => {
+        console.log(`confirmed`);
+        game_info.state_idx++;
+        io.emit("get_game_info", { game_info: game_info });
+        io.emit("comfirm");
     });
 
     socket.on("disconnect", () => {

@@ -15,31 +15,27 @@ const imglist = [topimg, jugimg, midimg, botimg, supimg];
 const Player_store = usePlayersStore();
 const Socket_Store = useClientSocketStore();
 
-function start_match() {
+function Start_Fearless() {
     if (Player_store.is_full()) {
-        Socket_Store.emit("game_start");
-        router.push("Fearless");
+        Socket_Store.emit("Start_Fearless");
     } else {
         alert("10명이 모두 모이지 않았습니다!");
     }
 }
 
 // 서버에서 player_joined 이벤트를 받으면 players 배열을 갱신
-function on_update_players(data) {
-    Player_store.update_players(data);
-}
-
 Socket_Store.on("player_info", (data) => {
     try {
         console.log("player_info 수신됨:", data);
-        on_update_players(data);
+        Player_store.update_players(data);
     } catch (e) {
         console.error("player_info 처리 중 오류 발생:", e);
     }
 });
 
 Socket_Store.emit("get_player_info");
-Socket_Store.on("game_start", () => {
+
+Socket_Store.on("Start_Fearless", () => {
     router.push("Fearless");
 });
 
@@ -115,7 +111,7 @@ console.log(Player_store.get_player_info());
             <div class="btn-container">
                 <button
                     class="btn"
-                    @click="start_match()"
+                    @click="Start_Fearless()"
                     v-if="
                         Player_store.get_player_info().blue_player_1
                             .socket_id == Socket_Store.get_socket_id()

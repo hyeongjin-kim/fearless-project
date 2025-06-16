@@ -36,8 +36,31 @@ function isselected(id) {
 const Selected_Champion = ref("");
 
 function choose(id) {
-    Selected_Champion.value = id;
-    Socket_Store.emit("choose", { champion_name: id });
+    // 밴 - 각 팀의 팀장만 가능
+    if (State_Store.state.phase == "Ban") {
+        if (
+            Player_store.get_player_info()[
+                `${State_Store.state.turn.toLocaleLowerCase()}_player_1`
+            ].socket_id === Socket_Store.get_socket_id()
+        ) {
+            Selected_Champion.value = id;
+            Socket_Store.emit("choose", { champion_name: id });
+        }
+    }
+    // 픽 - 자신의 차례만 가능
+    else if (State_Store.state.phase == "Pick") {
+        if (
+            Player_store.get_player_info()[
+                `${State_Store.state.turn.toLocaleLowerCase()}_player_${index_conversion(
+                    State_Store.state.turn,
+                    State_Store.state.index
+                )}`
+            ].socket_id === Socket_Store.get_socket_id()
+        ) {
+            Selected_Champion.value = id;
+            Socket_Store.emit("choose", { champion_name: id });
+        }
+    } else return;
 }
 
 function isDisabled(championId) {

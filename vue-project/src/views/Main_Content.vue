@@ -22,6 +22,16 @@ import ChampionGrid from "./ChampionGrid.vue";
 const All_Champions = ref("");
 const Current_Champion_List = ref([]);
 const Base_List = ref();
+const Game_info = ref({
+    blue_ban: ["", "", "", "", ""],
+    red_ban: ["", "", "", "", ""],
+    blue_pick: ["", "", "", "", ""],
+    red_pick: ["", "", "", "", ""],
+    blue_global_ban: [],
+    red_global_ban: [],
+    set_idx: 1,
+    state_idx: 0,
+});
 
 const Version_Store = useVersionStore();
 
@@ -46,98 +56,71 @@ const Reset_Search_Bar = ref(false);
 onMounted(async () => {
     if (!Version_Store.version) await Version_Store.Get_version();
     await Get_nickname();
-    Socket_Store.on("match_start", () => {
+    Socket_Store.on("game_start", () => {
         try {
-            console.log("match start");
+            console.log("game start");
             Timer_Store.startTimer();
-            State_Store.next_state();
             console.log(State_Store.state);
         } catch (e) {
-            console.log("매치 시작 오류");
-        }
-    });
-    Socket_Store.on("match_reset", () => {
-        try {
-            console.log("match reset");
-            State_Store.reset();
-            console.log(State_Store.state);
-            Blue_Ban_Store.reset();
-            Red_Ban_Store.reset();
-            Blue_Pick_Store.reset();
-            Red_Pick_Store.reset();
-            Timer_Store.timeExpired();
-        } catch (e) {
-            console.log("매치 종료 오류");
-        }
-    });
-    Socket_Store.on("match_end", () => {
-        try {
-            console.log("match end");
-            State_Store.reset();
-            Set_Index_Store.increase_setindex();
-            Red_Global_Ban_Store.set_ban(Red_Pick_Store.Redpick);
-            Blue_Global_Ban_Store.set_ban(Blue_Pick_Store.Bluepick);
-            Blue_Ban_Store.reset();
-            Red_Ban_Store.reset();
-            Blue_Pick_Store.reset();
-            Red_Pick_Store.reset();
-            Timer_Store.timeExpired();
-        } catch (e) {
-            console.log("매치 종료 오류");
+            console.log("게임 시작 오류");
         }
     });
     Socket_Store.on("game_reset", () => {
         try {
             console.log("game reset");
-            Set_Index_Store.reset();
-            State_Store.reset();
-            Blue_Global_Ban_Store.reset();
-            Red_Global_Ban_Store.reset();
-            Blue_Ban_Store.reset();
-            Red_Ban_Store.reset();
-            Blue_Pick_Store.reset();
-            Red_Pick_Store.reset();
             Timer_Store.timeExpired();
         } catch (e) {
-            console.log("게임 초기화 오류");
+            console.log("게임 종료 오류");
         }
     });
-    Socket_Store.on("swap", () => {
+    Socket_Store.on("game_end", () => {
         try {
-            console.log("swap");
-            let tempban = Blue_Ban_Store.Blueban.reverse();
-            Blue_Ban_Store.set_all(Red_Ban_Store.Redban.reverse());
-            Red_Ban_Store.set_all(tempban);
-
-            let tempglobalben = Blue_Global_Ban_Store.GlobalBlueban.reverse();
-            Blue_Global_Ban_Store.set_all(
-                Red_Global_Ban_Store.GlobalRedban.reverse()
-            );
-            Red_Global_Ban_Store.set_all(tempglobalben);
-
-            let temppick = Blue_Pick_Store.Bluepick.reverse();
-            Blue_Pick_Store.set_all(Red_Pick_Store.Redpick.reverse());
-            Red_Pick_Store.set_all(temppick);
+            console.log("game end");
+            Timer_Store.timeExpired();
         } catch (e) {
-            console.log("게임 초기화 오류");
+            console.log("게임 종료 오류");
+        }
+    });
+    Socket_Store.on("match_reset", () => {
+        try {
+            console.log("match reset");
+            Timer_Store.timeExpired();
+        } catch (e) {
+            console.log("매치 초기화 오류");
         }
     });
     Socket_Store.on("get_game_info", (game_info) => {
         try {
-            console.log(`get game info: ${JSON.stringify(game_info)}`);
-
-            Set_Index_Store.set_setindex(game_info.set_idx);
-            State_Store.set_state(game_info.state_idx);
-            Blue_Global_Ban_Store.set_all(game_info.blue_global_ban);
-            Red_Global_Ban_Store.set_all(game_info.red_global_ban);
-            Blue_Ban_Store.set_all(game_info.blue_ban);
-            Red_Ban_Store.set_all(game_info.red_ban);
-            Blue_Pick_Store.set_all(game_info.blue_pick);
-            Red_Pick_Store.set_all(game_info.red_pick);
+            Object.assign(Game_info.value, game_info.game_info);
+            console.log(`get game info: ${JSON.stringify(Game_info.value)}`);
+            Set_Index_Store.set_setindex(Game_info.value.set_idx);
+            State_Store.set_state(Game_info.value.state_idx);
+            Blue_Global_Ban_Store.set_all(Game_info.value.blue_global_ban);
+            Red_Global_Ban_Store.set_all(Game_info.value.red_global_ban);
+            Blue_Ban_Store.set_all(Game_info.value.blue_ban);
+            Red_Ban_Store.set_all(Game_info.value.red_ban);
+            Blue_Pick_Store.set_all(Game_info.value.blue_pick);
+            Red_Pick_Store.set_all(Game_info.value.red_pick);
         } catch (e) {
             console.log("게임 정보 동기화 오류");
+            console.log(e);
         }
     });
+    Socket_Store.on("confirm", () => {
+        const phase = State_Store.phase;
+        if (phase !== "Done" && phase !== "Ready") {
+            Timer_Store.startTimer();
+        } else Timer_Store.timeExpired();
+    });
+    Socket_Store.on("player_info", (data) => {
+        try {
+            console.log("player_info 수신됨:", data);
+            Player_store.update_players(data);
+        } catch (e) {
+            console.error("player_info 처리 중 오류 발생:", e);
+        }
+    });
+    Socket_Store.emit("get_game_info");
 });
 
 async function Get_nickname() {
@@ -146,20 +129,20 @@ async function Get_nickname() {
     Nickname_Map.value = data;
 }
 
-function MatchStart() {
-    Socket_Store.emit("match_start");
+function GameStart() {
+    Socket_Store.emit("game_start");
 }
 
-function MatchConfirm() {
-    Socket_Store.emit("match_end");
+function GameConfirm() {
+    Socket_Store.emit("game_end");
 }
 
 function Swap() {
     Socket_Store.emit("swap");
 }
 
-function cleargame() {
-    Socket_Store.emit("game_reset");
+function MatchClear() {
+    Socket_Store.emit("match_reset");
 }
 
 function isDisabled(championId) {
@@ -186,11 +169,7 @@ function select_confirm(choice) {
             );
             const random_pick = availableList[random_index].id;
 
-            if (State_Store.state.turn == "Red") {
-                Red_Pick_Store.set_pick(random_pick, State_Store.state.index);
-            } else {
-                Blue_Pick_Store.set_pick(random_pick, State_Store.state.index);
-            }
+            Socket_Store.emit("choose", { champion_name: random_pick });
         } else {
             alert("챔피언을 선택하세요.");
             return;
@@ -204,11 +183,7 @@ function select_confirm(choice) {
             return;
         }
     }
-    const phase = State_Store.phase;
-
-    if (phase !== "Done" && phase !== "Ready") {
-        Timer_Store.startTimer();
-    } else Timer_Store.timeExpired();
+    Socket_Store.emit("confirm");
 }
 
 function champ_filter(Filtered_List) {
@@ -241,10 +216,11 @@ function onSearchInput(query) {
 function normalize(str) {
     return str.replace(/\s/g, "").toLowerCase();
 }
+console.log(Game_info.value);
 </script>
 
 <template>
-    <div class="list-container">
+    <div class="list-container" v-if="Game_info">
         <div class="filter-container" v-if="State_Store.state.phase != 'Done'">
             <Line_Filter @change-filter="champ_filter" />
             <SearchBar :QueryProp="Reset_Search_Bar" @search="onSearchInput" />
@@ -272,7 +248,7 @@ function normalize(str) {
             <button
                 v-if="State_Store.state.phase == 'Ready'"
                 class="btn"
-                @click="MatchStart()"
+                @click="GameStart()"
             >
                 게임 시작
             </button>
@@ -282,7 +258,7 @@ function normalize(str) {
                     Set_Index_Store.setindex < 5
                 "
                 class="btn"
-                @click="MatchConfirm()"
+                @click="GameConfirm()"
             >
                 {{ Set_Index_Store.setindex }}세트 종료
             </button>
@@ -302,7 +278,7 @@ function normalize(str) {
                     Set_Index_Store.setindex == 5
                 "
                 class="btn"
-                @click="cleargame()"
+                @click="MatchClear()"
             >
                 경기 종료
             </button>

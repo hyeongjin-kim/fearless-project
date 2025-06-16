@@ -7,6 +7,7 @@
         "dev": "vite --host",
         "build": "vite build",
         "preview": "vite preview",
+        "predeploy": "npm run build",
         "deploy": "gh-pages -d dist"
     },
     "dependencies": {
@@ -24,5 +25,6 @@
         "prettier": "^3.5.3",
         "vite": "^6.2.4",
         "vite-plugin-vue-devtools": "^7.7.2"
-    }
+    },
+    "homepage": "https://hyeongjin-kim.github.io/fearless-project/"
 }

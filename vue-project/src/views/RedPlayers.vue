@@ -1,15 +1,22 @@
 <script setup>
-import { ref } from "vue";
 import { useRedpickStore } from "@/stores/Red_Pick";
+import { useStateStore } from "@/stores/state";
+import { usePlayersStore } from "@/stores/Players";
+import { useClientSocketStore } from "@/stores/Client_Socket";
+
+import { ref } from "vue";
 import topimg from "@/assets/data/top.png";
 import jugimg from "@/assets/data/jug.png";
 import midimg from "@/assets/data/mid.png";
 import botimg from "@/assets/data/bot.png";
 import supimg from "@/assets/data/sup.png";
-import { useStateStore } from "@/stores/state";
+
 const imglist = [topimg, jugimg, midimg, botimg, supimg];
+
 const Red_Pick_Store = useRedpickStore();
 const State_Store = useStateStore();
+const Player_store = usePlayersStore();
+const Socket_Store = useClientSocketStore();
 let players_to_swap = ref([]);
 
 function is_active(index) {
@@ -21,40 +28,61 @@ function isselected(index) {
 }
 function swap(index) {
     if (State_Store.state.phase != "Done") return;
-    if (players_to_swap.value.includes(index)) players_to_swap.value = [];
-    else {
-        players_to_swap.value.push(index);
-        if (players_to_swap.value.length == 2) {
-            let temp = Red_Pick_Store.Redpick[players_to_swap.value[0]];
-            Red_Pick_Store.set_pick(
-                Red_Pick_Store.Redpick[players_to_swap.value[1]],
-                players_to_swap.value[0]
-            );
-            Red_Pick_Store.set_pick(temp, players_to_swap.value[1]);
-            players_to_swap.value = [];
-        }
+    if (
+        Player_store.get_player_info().red_player_1.socket_id !=
+        Socket_Store.get_socket_id()
+    )
+        return;
+    if (players_to_swap.value.includes(index)) {
+        players_to_swap.value.length = 0;
+        return;
+    }
+
+    players_to_swap.value.push(index);
+
+    if (players_to_swap.value.length === 2) {
+        const indices = [...players_to_swap.value];
+
+        Socket_Store.emit("line_swap", {
+            team: "Red",
+            index: indices,
+        });
+
+        players_to_swap.value.length = 0;
     }
 }
 </script>
 
-TODO: 닉네임 써주기
 <template>
     <div class="Red_Player">
-        <img
+        <div
             v-for="(pick, index) in Red_Pick_Store.Redpick"
             :key="index"
-            :class="[
-                'championiller',
-                { active: is_active(index) || isselected(index) },
-            ]"
-            :src="
-                pick
-                    ? `https://ddragon.leagueoflegends.com/cdn/img/champion/loading/${pick}_0.jpg`
-                    : imglist[index]
-            "
-            alt=""
-            @click="swap(index)"
-        />
+            class="champion-container"
+        >
+            <div class="champion-img-wrapper">
+                <img
+                    :class="[
+                        'championiller',
+                        { active: is_active(index) || isselected(index) },
+                    ]"
+                    :src="
+                        pick
+                            ? `https://ddragon.leagueoflegends.com/cdn/img/champion/loading/${pick}_0.jpg`
+                            : imglist[index]
+                    "
+                    alt=""
+                    @click="swap(index)"
+                />
+                <div class="nickname-overlay">
+                    {{
+                        Player_store.get_player_info()[
+                            `red_player_${index + 1}`
+                        ]?.nickname || ""
+                    }}
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -65,16 +93,53 @@ TODO: 닉네임 써주기
     height: auto;
     flex-wrap: nowrap;
 }
-.championiller {
+.champion-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 8vw;
+}
+.champion-img-wrapper {
+    position: relative;
     width: 8vw;
     height: auto;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+}
+.championiller {
     box-sizing: border-box;
+    width: 8vw;
+    height: auto;
+    object-fit: cover;
 }
 .championiller.active {
     border-color: red;
     animation: blink 2s infinite;
     z-index: 2;
 }
+.nickname-overlay {
+    position: absolute;
+    bottom: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    color: #fff;
+    font-weight: bold;
+    font-size: 0.8em;
+    text-align: center;
+    text-shadow:
+        0 0 8px #000,
+        0 0 4px #000,
+        0 2px 8px #00bfff;
+    padding: 2px 6px;
+    border-radius: 6px;
+    background: rgba(0, 0, 0, 0.25);
+    pointer-events: none;
+    z-index: 3;
+    letter-spacing: 0.5px;
+}
+
 @keyframes blink {
     0%,
     100% {

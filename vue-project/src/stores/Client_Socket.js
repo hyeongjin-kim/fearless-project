@@ -12,7 +12,7 @@ export const useClientSocketStore = defineStore("Client_Socket", () => {
     // Connect to the server (call this once, e.g. in App.vue or on login)
     function connectSocket() {
         if (!socket.value) {
-            socket.value = io(`${address}`); // Change to your server URL/port
+            socket.value = io(`${address}`, { transports: ["websocket"] });
         }
     }
 
