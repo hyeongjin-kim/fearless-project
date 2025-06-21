@@ -2,7 +2,6 @@ import { ref } from "vue";
 import { defineStore } from "pinia";
 import { io } from "socket.io-client";
 
-const address = import.meta.env.VITE_SERVER_ADDRESS;
 const socket_port = import.meta.env.VITE_SOCKET_PORT;
 
 export const useClientSocketStore = defineStore("Client_Socket", () => {
@@ -10,7 +9,7 @@ export const useClientSocketStore = defineStore("Client_Socket", () => {
     const socket = ref(null);
 
     // Connect to the server (call this once, e.g. in App.vue or on login)
-    function connectSocket() {
+    function connectSocket(address) {
         if (!socket.value) {
             socket.value = io(`${address}`, { transports: ["websocket"] });
         }
