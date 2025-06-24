@@ -190,6 +190,7 @@ function index_conversion(team, index) {
 .confirmbtn-container {
     display: flex;
     justify-content: center;
+    height: 5vh;
 }
 .confirm {
     margin-top: 5px;

@@ -315,6 +315,7 @@ console.log(Game_info.value);
 }
 .game-end-btn-container {
     display: flex;
+    height: 5vh;
     justify-content: space-between;
 }
 .filter-container {

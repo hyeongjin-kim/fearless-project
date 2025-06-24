@@ -57,6 +57,11 @@ function enter(team, index) {
     Socket_Store.emit("move", { team: team, index: index });
 }
 
+function is_my_cell(id) {
+    console.log(id);
+    return Socket_Store.get_socket_id() === id;
+}
+
 console.log(Player_store.get_player_info());
 </script>
 
@@ -70,7 +75,18 @@ console.log(Player_store.get_player_info());
                         v-for="(position, index) in imglist"
                         :key="index"
                     >
-                        <div class="team_blue">
+                        <div
+                            :class="[
+                                'team_blue',
+                                {
+                                    my_cell: is_my_cell(
+                                        Player_store.get_player_info()[
+                                            `blue_player_${index + 1}`
+                                        ].socket_id
+                                    ),
+                                },
+                            ]"
+                        >
                             {{
                                 Player_store.get_player_info()[
                                     `blue_player_${index + 1}`
@@ -88,7 +104,18 @@ console.log(Player_store.get_player_info());
                             </button>
                         </div>
                         <img :src="`${position}`" />
-                        <div class="team_red">
+                        <div
+                            :class="[
+                                'team_red',
+                                {
+                                    my_cell: is_my_cell(
+                                        Player_store.get_player_info()[
+                                            `red_player_${index + 1}`
+                                        ].socket_id
+                                    ),
+                                },
+                            ]"
+                        >
                             {{
                                 Player_store.get_player_info()[
                                     `red_player_${index + 1}`
@@ -164,6 +191,9 @@ main {
     border: 1px red solid;
     color: white;
     text-align: center;
+}
+.my_cell {
+    border: 1px yellow solid;
 }
 .btn-container {
     display: flex;

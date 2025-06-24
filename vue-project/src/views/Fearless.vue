@@ -141,7 +141,7 @@ main {
 }
 .sound_icon {
     height: 7vh;
-    width: 7vh;
+    width: auto;
     cursor: pointer;
 }
 .container {
