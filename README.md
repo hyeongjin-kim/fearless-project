@@ -1,3 +1,5 @@
+https://hyeongjin-kim.github.io/fearless-project/
+<br>
 올해 새롭게 LCK 및 WORLDs에 도입된 Fearless Draft 방식으로 밴픽을 할 수 있는 시뮬레이션 사이트이다.
 <div>주요 기능 설명 </div>
 
