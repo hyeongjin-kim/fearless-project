@@ -308,7 +308,6 @@ console.log(Game_info.value);
     align-items: center;
 }
 .btn {
-    margin-top: 20px;
     width: 20vh;
     height: 5vh;
     font-size: 30px;
